@@ -175,7 +175,7 @@ if __name__ == "__main__":
     name_store = []  # Construct playlist info storage
     tracks_store = construct_storage()  # Construct track info storage
 
-    for country in countries[4:6]:
+    for country in countries[9:]:
         print(f'Country: {country}')
         top_playlists, names = find_top_playlists(country)
 
