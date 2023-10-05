@@ -5,7 +5,6 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
 import pandas as pd
-import numpy as np
 
 from credentials import set_credentials
 
