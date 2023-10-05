@@ -36,7 +36,8 @@ def construct_storage():
         'track_hrefs': [],
         'analysis_urls': [],
         'durations_ms': [],
-        'time_signatures': []
+        'time_signatures': [],
+        'playlist_name': []
     }
     return store_outline
 
@@ -109,6 +110,11 @@ def extract_audio_features(store, sp):
         offset = offset + limit
 
 
+def merge_stores(tracks_store, store):
+    for key, value in store.items():
+        tracks_store[key].extend(value)
+
+
 def extract_tracks(sp, playlist_uri, store):
     offset = 0
     limit = 100
@@ -122,7 +128,9 @@ def extract_tracks(sp, playlist_uri, store):
         store = retrieve_batch_info(playlist, store)  # Retrieve batch information
         print(f"Current offset: {offset}")
         offset = offset + limit  # Update offset
-    return store
+
+    extract_artist_info(store, sp)
+    extract_audio_features(store, sp)
 
 
 def find_top_playlists(country):
@@ -138,12 +146,21 @@ def find_top_playlists(country):
 
 def add_playlist_tracking(name, store):
     store['playlist_name'] = [name] * len(store['uris'])
-    return store
 
 
 def record_playlists(top_playlists, names, playlist_store, name_store):
     playlist_store.extend(top_playlists)
     name_store.extend(names)
+
+
+def save_data(tracks_store):
+    file_path = "../data/tracks.csv"
+    df_new = pd.DataFrame.from_dict(tracks_store)  # Create a dataframe from the collected data
+    df_old = pd.read_csv(file_path)  # Create dataframe from old values
+    df_combined = pd.concat([df_new, df_old])
+    df_unique = df_combined.drop_duplicates(subset=['uris'])
+    df_unique = df_unique.reset_index(drop=True)
+    df_unique.to_csv(file_path, mode='w')
 
 
 if __name__ == "__main__":
@@ -155,23 +172,23 @@ if __name__ == "__main__":
 
     countries = ['AU', 'GB', 'US', 'CA', 'JM', 'MT', 'NL', 'FR', 'DE', 'GH', 'ZA']
 
-    playlist_store = []
+    playlist_store = []  # Store for playlist names
     name_store = []  # Construct playlist info storage
-    store = construct_storage()  # Construct track info storage
+    tracks_store = construct_storage()  # Construct track info storage
 
-    for country in countries[0:1]:
+    for country in countries[1:3]:
         print(f'Country: {country}')
         top_playlists, names = find_top_playlists(country)
 
-        for playlist, name in zip(top_playlists[0:2], names[0:2]):
+        for playlist, name in zip(top_playlists, names):
             print(f'Playlist name: {name}')
-            store = extract_tracks(sp, playlist, store)
-            store = add_playlist_tracking(name, store)
+            store = construct_storage()
+            extract_tracks(sp, playlist, store)
+            add_playlist_tracking(name, store)
+            merge_stores(tracks_store, store)
             time.sleep(45)
-
-        # TODO Shift artist and feature to the very end of info extraction. It is currently repeating every loop
-        extract_artist_info(store, sp)
-        extract_audio_features(store, sp)
 
         record_playlists(top_playlists, names, playlist_store, name_store)
         print('-----------------------------------------------------------------------------')
+
+    save_data(tracks_store)
