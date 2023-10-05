@@ -175,17 +175,20 @@ if __name__ == "__main__":
     name_store = []  # Construct playlist info storage
     tracks_store = construct_storage()  # Construct track info storage
 
-    for country in countries[1:3]:
+    for country in countries[3:4]:
         print(f'Country: {country}')
         top_playlists, names = find_top_playlists(country)
 
-        for playlist, name in zip(top_playlists, names):
-            print(f'Playlist name: {name}')
-            store = construct_storage()
-            extract_tracks(sp, playlist, store)
-            add_playlist_tracking(name, store)
-            merge_stores(tracks_store, store)
-            time.sleep(45)
+        for playlist, name in zip(top_playlists[:9], names[:9]):
+            try:
+                print(f'Playlist name: {name}')
+                store = construct_storage()
+                extract_tracks(sp, playlist, store)
+                add_playlist_tracking(name, store)
+                merge_stores(tracks_store, store)
+                time.sleep(45)
+            except Exception:
+                print(f"Error accessing playlist {name} tracks")
 
         record_playlists(top_playlists, names, playlist_store, name_store)
         print('-----------------------------------------------------------------------------')
