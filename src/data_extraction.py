@@ -152,23 +152,22 @@ def record_playlists(top_playlists, names, playlist_store, name_store):
     name_store.extend(names)
 
 
-def save_data(tracks_store):
-    file_path = "../data/tracks.csv"
+def save_data(tracks_store, name='tracks.csv'):
+    data_path = '../data/'
+    file_path = data_path + name
     df_new = pd.DataFrame.from_dict(tracks_store)  # Create a dataframe from the collected data
     df_old = pd.read_csv(file_path)  # Create dataframe from old values
-    df_combined = pd.concat([df_new, df_old])
-    df_unique = df_combined.drop_duplicates(subset=['uris'])
-    df_unique = df_unique.reset_index(drop=True)
-    df_unique.to_csv(file_path, mode='w')
+
+    if df_old.shape[0] != 0:  # Previously saved songs, requiring further processing to have unique values only
+        df_combined = pd.concat([df_new, df_old])
+        df_unique = df_combined.drop_duplicates(subset=['uris'])
+        df_unique = df_unique.reset_index(drop=True)
+        df_unique.to_csv(file_path, mode='w')
+    else:
+        df_new.to_csv(file_path, mode='w')
 
 
-if __name__ == "__main__":
-    set_credentials()
-
-    client_credentials_manager = SpotifyClientCredentials(client_id=os.getenv('CLIENT_ID'),
-                                                          client_secret=os.getenv('CLIENT_SECRET'))
-    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-
+def top_playlist_extraction(sp):
     countries = ['AU', 'GB', 'US', 'CA', 'JM', 'MT', 'NL', 'FR', 'DE', 'GH', 'ZA']
 
     playlist_store = []  # Store for playlist names
@@ -194,3 +193,27 @@ if __name__ == "__main__":
         print('-----------------------------------------------------------------------------')
 
     save_data(tracks_store)
+
+
+def target_playlist_extraction(sp, url, name):
+    uri = url2uri(url)
+    store = construct_storage()
+    extract_tracks(sp, uri, store)
+    add_playlist_tracking(name, store)
+    save_data(store, 'target.csv')
+
+
+def url2uri(url):
+    return url.split('/')[-1].split('?')[0]
+
+
+if __name__ == "__main__":
+    set_credentials()
+
+    client_credentials_manager = SpotifyClientCredentials(client_id=os.getenv('CLIENT_ID'),
+                                                          client_secret=os.getenv('CLIENT_SECRET'))
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
+    url = "https://open.spotify.com/playlist/799B2k7VQhsWeA2iQrun9f?si=56b518f8dd7c4095"
+
+    target_playlist_extraction(sp, url, "rob_perform")
