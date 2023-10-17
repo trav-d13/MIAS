@@ -5,14 +5,8 @@ import matplotlib.pyplot as plt
 
 st.title("MIAS")
 st.markdown(
-    "MIAS is the **M**usically **I**lliterate **A**id **S**ystem designed to help developing artists expand on the "
-    "songs"
-    "they perform, by providing recommendations based on their current performance choices. I have very little "
-    "musical talent,"
-    ", but stil want to help, hence the name. ")
+    "MIAS is the **M**usically **I**lliterate **A**id **S**ystem designed to help developing artists expand their "
+    "performance playlist")
 
-uploaded_file = st.file_uploader('Upload your file here')
+playlist_url = st.text_input("Please insert playlist url here")
 
-if uploaded_file:
-    df = pd.read_csv(uploaded_file)
-    st.write(df.describe())
