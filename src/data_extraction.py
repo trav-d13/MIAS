@@ -6,7 +6,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 import pandas as pd
 
-from credentials import set_credentials
+# from credentials import set_credentials
 
 
 def construct_storage():
@@ -153,14 +153,14 @@ def record_playlists(top_playlists, names, playlist_store, name_store):
 
 
 def save_data(tracks_store, name='tracks.csv'):
-    data_path = '../data/'
-    file_path = data_path + name
+    root_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    file_path = os.path.join(root_path, 'data', 'tracks.csv')
     df_new = pd.DataFrame.from_dict(tracks_store)  # Create a dataframe from the collected data
     df_old = pd.read_csv(file_path)  # Create dataframe from old values
 
     if df_old.shape[0] != 0:  # Previously saved songs, requiring further processing to have unique values only
-        df_combined = pd.concat([df_new, df_old])
-        df_unique = df_combined.drop_duplicates(subset=['uris'])
+        df_combined = pd.concat([df_new, df_old], axis=0)
+        df_unique = df_combined.drop_duplicates(subset='uris', keep='first')
         df_unique = df_unique.reset_index(drop=True)
         df_unique.to_csv(file_path, mode='w')
     else:
@@ -200,7 +200,7 @@ def target_playlist_extraction(sp, url, name):
     store = construct_storage()
     extract_tracks(sp, uri, store)
     add_playlist_tracking(name, store)
-    save_data(store, 'target.csv')
+    return store
 
 
 def url2uri(url):
@@ -216,4 +216,5 @@ if __name__ == "__main__":
 
     url = "https://open.spotify.com/playlist/799B2k7VQhsWeA2iQrun9f?si=56b518f8dd7c4095"
 
-    target_playlist_extraction(sp, url, "rob_perform")
+    df = target_playlist_extraction(sp, url, "rob_perform")
+    save_data(df, 'target.csv')
