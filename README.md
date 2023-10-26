@@ -10,6 +10,8 @@ streamlit run src/app.py
 ```
 
 ### Spotify Credential Management
+
+#### Streamlit Application
 The application makes use of Streamlits secrets manager. For the running applications these are stored in the Streamlit running platform. 
 In order to make the secrets available during development, please perform the following steps: 
 
@@ -21,3 +23,17 @@ CLIENT_ID = "CLIENT ID KEY"
 CLIENT_SECRET = "CLIENT SECRET KEY"
 ```
 The application now has access to your spotify credentials.
+
+#### Notebooks
+The notebooks make use of environmental variables, please make sure you have a Python file named
+`notebooks/credentials.py`.
+Inside of `credentials.py` please insert the following with your correct Spotify configuration keys.
+
+```Python
+import os
+
+
+def set_credentials():
+    os.environ['CLIENT_ID'] = ""
+    os.environ['CLIENT_SECRET'] = ""
+```

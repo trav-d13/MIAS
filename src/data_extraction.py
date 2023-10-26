@@ -6,7 +6,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 import pandas as pd
 
-# from credentials import set_credentials
+from notebooks.credentials import set_credentials
 
 
 def construct_storage():
@@ -122,7 +122,7 @@ def extract_tracks(sp, playlist_uri, store):
     print(f"Total songs: {total_songs}")
 
     while offset < total_songs:
-        time.sleep(10)
+        time.sleep(2)
         playlist = sp.playlist_tracks(playlist_uri, limit=100, offset=offset)  # Retrieve batch of songs in playlist
         store = retrieve_batch_info(playlist, store)  # Retrieve batch information
         print(f"Current offset: {offset}")
@@ -154,11 +154,11 @@ def record_playlists(top_playlists, names, playlist_store, name_store):
 
 def save_data(tracks_store, name='tracks.csv'):
     root_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-    file_path = os.path.join(root_path, 'data', 'tracks.csv')
+    file_path = os.path.join(root_path, 'data', name)
     df_new = pd.DataFrame.from_dict(tracks_store)  # Create a dataframe from the collected data
-    df_old = pd.read_csv(file_path)  # Create dataframe from old values
+    df_old = pd.read_csv(file_path, index_col=0)  # Create dataframe from old values
 
-    if df_old.shape[0] != 0:  # Previously saved songs, requiring further processing to have unique values only
+    if df_old.shape[0] != 0 and name == "tracks.csv":  # Previously saved songs, requiring further processing to have unique values only
         df_combined = pd.concat([df_new, df_old], axis=0)
         df_unique = df_combined.drop_duplicates(subset='uris', keep='first')
         df_unique = df_unique.reset_index(drop=True)
@@ -174,18 +174,18 @@ def top_playlist_extraction(sp):
     name_store = []  # Construct playlist info storage
     tracks_store = construct_storage()  # Construct track info storage
 
-    for country in countries[10:]:
+    for country in countries[:6]:
         print(f'Country: {country}')
         top_playlists, names = find_top_playlists(country)
 
-        for playlist, name in zip(top_playlists[:5], names[:5]):
+        for playlist, name in zip(top_playlists[:], names[:]):
             try:
                 print(f'Playlist name: {name}')
                 store = construct_storage()
                 extract_tracks(sp, playlist, store)
                 add_playlist_tracking(name, store)
                 merge_stores(tracks_store, store)
-                time.sleep(45)
+                time.sleep(5)
             except Exception:
                 print(f"Error accessing playlist {name} tracks")
 
@@ -200,7 +200,7 @@ def target_playlist_extraction(sp, url, name):
     store = construct_storage()
     extract_tracks(sp, uri, store)
     add_playlist_tracking(name, store)
-    return store
+    save_data(store, 'target.csv')
 
 
 def url2uri(url):
@@ -214,7 +214,8 @@ if __name__ == "__main__":
                                                           client_secret=os.getenv('CLIENT_SECRET'))
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-    url = "https://open.spotify.com/playlist/799B2k7VQhsWeA2iQrun9f?si=56b518f8dd7c4095"
+    url = "https://open.spotify.com/playlist/799B2k7VQhsWeA2iQrun9f?si=345d3d94fb484f2c"
 
-    df = target_playlist_extraction(sp, url, "rob_perform")
-    save_data(df, 'target.csv')
+    target_playlist_extraction(sp, url, "Rob Performance Playlist")
+    # top_playlist_extraction(sp)
+
