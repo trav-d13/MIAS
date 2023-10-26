@@ -168,13 +168,13 @@ def save_data(tracks_store, name='tracks.csv'):
 
 
 def top_playlist_extraction(sp):
-    countries = ['AU', 'GB', 'US', 'CA', 'JM', 'MT', 'NL', 'FR', 'DE', 'GH', 'ZA']
+    countries = ['AU', 'GB', 'US', 'CA', 'JM', 'ZA']
 
     playlist_store = []  # Store for playlist names
     name_store = []  # Construct playlist info storage
     tracks_store = construct_storage()  # Construct track info storage
 
-    for country in countries[:6]:
+    for country in countries[5:]:
         print(f'Country: {country}')
         top_playlists, names = find_top_playlists(country)
 
@@ -216,6 +216,6 @@ if __name__ == "__main__":
 
     url = "https://open.spotify.com/playlist/799B2k7VQhsWeA2iQrun9f?si=345d3d94fb484f2c"
 
-    target_playlist_extraction(sp, url, "Rob Performance Playlist")
-    # top_playlist_extraction(sp)
+    # target_playlist_extraction(sp, url, "Rob Performance Playlist")
+    top_playlist_extraction(sp)
 
