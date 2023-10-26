@@ -168,7 +168,7 @@ def save_data(tracks_store, name='tracks.csv'):
 
 
 def top_playlist_extraction(sp):
-    countries = ['AU', 'GB', 'US', 'CA', 'JM', 'MT', 'NL', 'FR', 'DE', 'GH', 'ZA']
+    countries = ['AU', 'GB', 'US', 'CA', 'JM', 'ZA']
 
     playlist_store = []  # Store for playlist names
     name_store = []  # Construct playlist info storage
