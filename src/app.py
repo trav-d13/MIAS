@@ -8,7 +8,7 @@ import os
 # Scripts
 from data_extraction import target_playlist_extraction, save_data
 
-
+# Credentials are stored using Streamlit secrets keeper.
 def retrieve_target_playlist(playlist_url, playlist_name):
     client_credentials_manager = SpotifyClientCredentials(client_id=st.secrets['CLIENT_ID'],
                                                           client_secret=st.secrets['CLIENT_SECRET'])
