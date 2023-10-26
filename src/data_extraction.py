@@ -174,7 +174,7 @@ def top_playlist_extraction(sp):
     name_store = []  # Construct playlist info storage
     tracks_store = construct_storage()  # Construct track info storage
 
-    for country in countries[6:10]:
+    for country in countries[5:]:
         print(f'Country: {country}')
         top_playlists, names = find_top_playlists(country)
 
