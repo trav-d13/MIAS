@@ -214,8 +214,8 @@ if __name__ == "__main__":
                                                           client_secret=os.getenv('CLIENT_SECRET'))
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-    url = "https://open.spotify.com/playlist/37i9dQZF1DWVrtsSlLKzro?si=9148819490d244e0"
+    url = "https://open.spotify.com/playlist/799B2k7VQhsWeA2iQrun9f?si=345d3d94fb484f2c"
 
-    # target_playlist_extraction(sp, url, "Sad Beats")
-    top_playlist_extraction(sp)
+    target_playlist_extraction(sp, url, "Rob Performance Playlist")
+    # top_playlist_extraction(sp)
 
