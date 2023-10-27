@@ -19,7 +19,7 @@ def ohe_prep(df, column):
 
 def tfidf_transformation(df_parm, tf=None):
     if tf is None:
-        tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 1), min_df=0.0)
+        tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 1), min_df=0.0, max_features=50)
         tfidf_matrix = tf.fit_transform(df_parm['artist_genres'])
     else:
         tfidf_matrix = tf.transform(df_parm['artist_genres'])
@@ -43,7 +43,7 @@ def data_pipeline(df, tf=None):
 
     # Normalize popularity values
     scaler = MinMaxScaler()
-    df[['durations_ms']] = scaler.fit_transform(df[['durations_ms']])
+    df[['durations_ms', 'tempos']] = scaler.fit_transform(df[['durations_ms', 'tempos']])
 
     # Perform TFID vectorization on genres
     df, tf = tfidf_transformation(df_parm=df, tf=tf)
