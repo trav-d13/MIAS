@@ -8,25 +8,25 @@ import os
 # Scripts
 from data_extraction import target_playlist_extraction, save_data
 
+
 ## METHODS  ##
-def retrieve_target_playlist(playlist_url, playlist_name):
+def retrieve_target_playlist(url: str, name: str):
     """ This method gathers all of the playlist song features and merges this data into the tracks dataset.
 
         Note: credentials are stored using Streamlit secrets keeper
 
     Args:
-        playlist_url (str): The url for the spotify playlist
-        playlist_name (str): The name of the spotify playlist
+        url (str): The url for the spotify playlist
+        name (str): The name of the spotify playlist
     Returns:
-        df_target (DataFrame): The playlist features
+        playlist (DataFrame): The playlist features
     """
     client_credentials_manager = SpotifyClientCredentials(client_id=st.secrets['CLIENT_ID'],
                                                           client_secret=st.secrets['CLIENT_SECRET'])  # Set up Spotify Credentials
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-    df_target = target_playlist_extraction(sp, playlist_url, playlist_name)  # Generate target playlist dataframe
-    print(df_target)
-    save_data(df_target)  # Save the playlist tracks into the larger tracks dataset
-    return df_target
+    playlist = target_playlist_extraction(sp, url, name)  # Generate target playlist dataframe
+    save_data(playlist)  # Save the playlist tracks into the larger tracks dataset
+    return playlist
 
 
 def access_tracks():
