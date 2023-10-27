@@ -43,7 +43,7 @@ def data_pipeline(df, tf=None):
 
     # Normalize popularity values
     scaler = MinMaxScaler()
-    df[['artist_pop', 'track_pop', 'durations_ms']] = scaler.fit_transform(df[['artist_pop', 'track_pop', 'durations_ms']])
+    df[['durations_ms']] = scaler.fit_transform(df[['durations_ms']])
 
     # Perform TFID vectorization on genres
     df, tf = tfidf_transformation(df_parm=df, tf=tf)
