@@ -6,7 +6,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 import pandas as pd
 
-from notebooks.credentials import set_credentials
+from credentials import set_credentials
 
 
 def construct_storage():
@@ -174,7 +174,7 @@ def top_playlist_extraction(sp):
     name_store = []  # Construct playlist info storage
     tracks_store = construct_storage()  # Construct track info storage
 
-    for country in countries[5:]:
+    for country in countries[3:]:
         print(f'Country: {country}')
         top_playlists, names = find_top_playlists(country)
 
@@ -185,7 +185,7 @@ def top_playlist_extraction(sp):
                 extract_tracks(sp, playlist, store)
                 add_playlist_tracking(name, store)
                 merge_stores(tracks_store, store)
-                time.sleep(5)
+                time.sleep(2)
             except Exception:
                 print(f"Error accessing playlist {name} tracks")
 
@@ -201,6 +201,7 @@ def target_playlist_extraction(sp, url, name):
     extract_tracks(sp, uri, store)
     add_playlist_tracking(name, store)
     save_data(store, 'target.csv')
+    return store
 
 
 def url2uri(url):

@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+#TODO Modify Pipeline into a modular build allowing various pipelines to be built
 
 def select_columns(df):
     df = df[['uris', 'artist_pop',
@@ -18,7 +19,7 @@ def ohe_prep(df, column):
 
 def tfidf_transformation(df_parm, tf=None):
     if tf is None:
-        tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 1), min_df=0.0)
+        tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 1), min_df=0.0, max_features=50)
         tfidf_matrix = tf.fit_transform(df_parm['artist_genres'])
     else:
         tfidf_matrix = tf.transform(df_parm['artist_genres'])
@@ -33,26 +34,22 @@ def tfidf_transformation(df_parm, tf=None):
 
 
 def data_pipeline(df, tf=None):
-    # Select only the necessary columns
     df = select_columns(df)
-    print(f'After select columns {df.shape}')
 
     # Perform OHE
     df = ohe_prep(df, 'modes')
     df = ohe_prep(df, 'keys')
-    print(f'After ohe {df.shape}')
+    df = ohe_prep(df, 'time_signatures')
 
     # Normalize popularity values
     scaler = MinMaxScaler()
-    df[['artist_pop', 'track_pop']] = scaler.fit_transform(df[['artist_pop', 'track_pop']])
-    print(f'After scaling {df.shape}')
+    df[['durations_ms', 'tempos']] = scaler.fit_transform(df[['durations_ms', 'tempos']])
 
     # Perform TFID vectorization on genres
     df, tf = tfidf_transformation(df_parm=df, tf=tf)
-    print(f'After tfid {df.shape}')
 
     df = df.set_index(keys='uris', drop=True)
-    print(f'After index reset {df.shape}')
+    print(f'Transform final shape {df.shape}')
 
     return df, tf
 
