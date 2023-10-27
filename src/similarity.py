@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import pandas as pd
+from pipeline import data_pipeline
 
 
 class Similarity(ABC):
@@ -31,8 +32,12 @@ class Similarity(ABC):
 
 class CosineSimilarity(Similarity):
     def __init__(self, playlist: pd.DataFrame, tracks: pd.DataFrame):
+        features, _ = data_pipeline(tracks)
+
         self.playlist = playlist
         self.tracks = tracks
+
+        self.playlist_features, self.track_features = self.separate_playlist_from_tracks(features)
         self.similarity = None
 
     def calculate_similarity(self):
@@ -43,3 +48,7 @@ class CosineSimilarity(Similarity):
 
     def get_top_n(self, n: int):
         pass
+
+    def separate_playlist_from_tracks(self, features: pd.DataFrame):
+        playlist_uris = self.playlist['uris'].tolist()
+        return features[features.index.isin(playlist_uris)], features[~features.index.isin(playlist_uris)]

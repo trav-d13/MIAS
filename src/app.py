@@ -7,11 +7,12 @@ import os
 
 # Scripts
 from data_extraction import target_playlist_extraction, save_data
+from similarity import CosineSimilarity
 
 
 ## METHODS  ##
 def retrieve_target_playlist(url: str, name: str):
-    """ This method gathers all of the playlist song features and merges this data into the tracks dataset.
+    """ This method gathers all the playlist song features and merges this data into the tracks dataset.
 
         Note: credentials are stored using Streamlit secrets keeper
 
@@ -19,14 +20,17 @@ def retrieve_target_playlist(url: str, name: str):
         url (str): The url for the spotify playlist
         name (str): The name of the spotify playlist
     Returns:
-        playlist (dict): The playlist features as a dictionary
+        playlist (DataFrame): The playlist features as a DataFrame
     """
     client_credentials_manager = SpotifyClientCredentials(client_id=st.secrets['CLIENT_ID'],
                                                           client_secret=st.secrets['CLIENT_SECRET'])  # Set up Spotify Credentials
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     playlist = target_playlist_extraction(sp, url, name)  # Generate target playlist dataframe
+    print(playlist)
     save_data(playlist)  # Save the playlist tracks into the larger tracks dataset
-    return playlist
+    playlist_df = playlist_to_df(playlist)
+    print(playlist_df.head())
+    return playlist_df
 
 
 def access_tracks():
@@ -39,6 +43,12 @@ def access_tracks():
     file_path = os.path.join(root_path, 'data', 'tracks.csv')
     df = pd.read_csv(file_path, index_col=0)  # Read in stored tracks dataframe
     return df
+
+
+def playlist_to_df(playlist: dict):
+    target_df = pd.DataFrame.from_dict(playlist)
+    return target_df
+
 
 
 ## UI ##
@@ -60,7 +70,10 @@ submit_button = st.button("Submit")
 
 if submit_button:
     if playlist_url != "" and playlist_name != "":
-        df_target = retrieve_target_playlist(playlist_url, playlist_name)
+        df_playlist = retrieve_target_playlist(playlist_url, playlist_name)
+        df_tracks = access_tracks()
+
+        similarity = CosineSimilarity(df_playlist, df_tracks)
 
         st.session_state.playlist_links.append(playlist_url)
         st.session_state.playlist_names.append(playlist_name)

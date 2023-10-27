@@ -201,6 +201,7 @@ def target_playlist_extraction(sp, url, name):
     extract_tracks(sp, uri, store)
     add_playlist_tracking(name, store)
     save_data(store, 'target.csv')
+    return store
 
 
 def url2uri(url):

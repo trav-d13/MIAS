@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+#TODO Modify Pipeline into a modular build allowing various pipelines to be built
 
 def select_columns(df):
     df = df[['uris', 'artist_pop',
