@@ -1,6 +1,9 @@
 from abc import ABC, abstractmethod
 import pandas as pd
 from pipeline import data_pipeline
+from sklearn.metrics import pairwise as similarity_measures
+
+pd.options.display.float_format = '{:.2f}'.format
 
 
 class Similarity(ABC):
@@ -41,14 +44,28 @@ class CosineSimilarity(Similarity):
         self.similarity = None
 
     def calculate_similarity(self):
-        pass
+        playlist_vector = self.vectorize_playlist()
+        track_matrix = self.track_features.to_numpy()
+
+        similarity_score = similarity_measures.cosine_similarity(track_matrix, playlist_vector)
+        uris = self.track_features.index.tolist()
+
+        self.similarity = pd.Series(similarity_score.T.tolist()[0], index=uris, name='sim_score')
+
 
     def access_similarity_scores(self):
-        pass
+        return self.similarity
 
     def get_top_n(self, n: int):
-        pass
+        tracks_similarity = self.tracks.merge(self.similarity, left_on='uris', right_index=True)
+        sorted_similarity = tracks_similarity.sort_values(by='sim_score', ascending=False)
+        sorted_n_similar = sorted_similarity.head(n)
+        return sorted_n_similar
 
     def separate_playlist_from_tracks(self, features: pd.DataFrame):
         playlist_uris = self.playlist['uris'].tolist()
         return features[features.index.isin(playlist_uris)], features[~features.index.isin(playlist_uris)]
+
+    def vectorize_playlist(self):
+        playlist_vector = self.playlist_features.mean(axis=0)
+        return playlist_vector.to_numpy().reshape(1, -1)
