@@ -95,7 +95,7 @@ else:
 
     col1, col2 = st.columns(2)
     count = 0
-    rec_df = st.session_state.similarity.get_top_n(16)
+    rec_df = st.session_state.similarity.get_top_n(30)
     for index, row in rec_df.iterrows():
         song_name = row['names']
         spotify_uri = row['uris']
@@ -125,7 +125,8 @@ else:
                      ax=axes)
 
     axes.set_yscale('log')
-    axes.set_xlabel('Similarity Values')
+    axes.set_xscale('log')
+    axes.set_xlabel('Similarity Values (Log)')
     axes.set_ylabel('Frequency')
 
     st.pyplot(plt)

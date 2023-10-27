@@ -3,8 +3,6 @@ import pandas as pd
 from pipeline import data_pipeline
 from sklearn.metrics import pairwise as similarity_measures
 
-pd.options.display.float_format = '{:.2f}'.format
-
 
 class Similarity(ABC):
     """This class serves as an outline of the Similarity module for the MIAS application
@@ -52,15 +50,14 @@ class CosineSimilarity(Similarity):
 
         self.similarity = pd.Series(similarity_score.T.tolist()[0], index=uris, name='sim_score')
 
-
     def access_similarity_scores(self):
         return self.similarity
 
     def get_top_n(self, n: int):
-        tracks_similarity = self.tracks.merge(self.similarity, left_on='uris', right_index=True)
-        sorted_similarity = tracks_similarity.sort_values(by='sim_score', ascending=False)
-        sorted_n_similar = sorted_similarity.head(n)
-        return sorted_n_similar
+        sim_df = pd.DataFrame(self.similarity, columns=['sim_score'])
+        sorted_sim = sim_df.sort_values(by='sim_score', ascending=False)
+        sorted_top = sorted_sim.head(n)
+        return sorted_top.merge(self.tracks, left_index=True, right_on='uris')
 
     def separate_playlist_from_tracks(self, features: pd.DataFrame):
         playlist_uris = self.playlist['uris'].tolist()

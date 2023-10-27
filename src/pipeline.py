@@ -34,26 +34,22 @@ def tfidf_transformation(df_parm, tf=None):
 
 
 def data_pipeline(df, tf=None):
-    # Select only the necessary columns
     df = select_columns(df)
-    print(f'After select columns {df.shape}')
 
     # Perform OHE
     df = ohe_prep(df, 'modes')
     df = ohe_prep(df, 'keys')
-    print(f'After ohe {df.shape}')
+    df = ohe_prep(df, 'time_signatures')
 
     # Normalize popularity values
     scaler = MinMaxScaler()
-    df[['artist_pop', 'track_pop']] = scaler.fit_transform(df[['artist_pop', 'track_pop']])
-    print(f'After scaling {df.shape}')
+    df[['artist_pop', 'track_pop', 'durations_ms']] = scaler.fit_transform(df[['artist_pop', 'track_pop', 'durations_ms']])
 
     # Perform TFID vectorization on genres
     df, tf = tfidf_transformation(df_parm=df, tf=tf)
-    print(f'After tfid {df.shape}')
 
     df = df.set_index(keys='uris', drop=True)
-    print(f'After index reset {df.shape}')
+    print(f'Transform final shape {df.shape}')
 
     return df, tf
 
