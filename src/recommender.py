@@ -7,7 +7,7 @@ from spotipy import SpotifyClientCredentials
 import os
 
 # Scripts
-from data_extraction import target_playlist_extraction, save_data
+from data_processing import target_playlist_extraction, save_data, update_tracking
 from similarity import CosineSimilarity
 
 
@@ -74,7 +74,7 @@ if submit_button:
 
         st.session_state.similarity = CosineSimilarity(df_playlist, df_tracks)
         st.session_state.similarity.calculate_similarity()
-        # st.write(st.session_state.similarity.get_top_n(20))
+        update_tracking(df_tracks)
 
         st.session_state.playlist_links.append(playlist_url)
         st.session_state.playlist_names.append(playlist_name)

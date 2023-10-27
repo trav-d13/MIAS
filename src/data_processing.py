@@ -1,5 +1,6 @@
 import os
 import time
+from datetime import datetime
 
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
@@ -206,6 +207,23 @@ def target_playlist_extraction(sp, url, name):
 
 def url2uri(url):
     return url.split('/')[-1].split('?')[0]
+
+
+def update_tracking(df):
+    root_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    file_path = os.path.join(root_path, 'data', 'dataset_growth.csv')
+    tracking_df = pd.read_csv(file_path, index_col=0)
+
+    current_time = datetime.now()
+    new_length = df.shape[0]
+    new_entry = pd.DataFrame.from_dict({'date': [current_time.strftime("%d-%m-%Y")],
+                                        'time': [current_time.strftime("%H:%M:%S")],
+                                        'track_count': [new_length]})
+
+    tracking_df = pd.concat([tracking_df, new_entry], axis=0, ignore_index=True)
+    tracking_df.reset_index(drop=True)
+    tracking_df.to_csv(file_path, mode='w')
+
 
 
 if __name__ == "__main__":
