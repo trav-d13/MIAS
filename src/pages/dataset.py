@@ -112,7 +112,7 @@ def generate_distribution(selection: list, artist_filter=None):
         ax.set_ylabel('Density')
         ax.legend()
     else:
-        h = sns.kdeplot(data=df, x=selection[0], hue='artist_names', fill=True)
+        h = sns.swarmplot(data=df, x=selection[0], y='artist_names', palette="Set2")
 
     return fig
 
