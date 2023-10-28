@@ -4,6 +4,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import MinMaxScaler
+import re
 
 
 class Monitor:
@@ -29,16 +30,36 @@ class Monitor:
                                     'acousticness', 'instrumentalness']]
         return acoustics_df
 
-    def access_specific_features(self, selection: list):
-        track_sample = self.tracks.sample(frac=0.1, random_state=2)
+    def access_specific_features(self, selection: list, sample=True):
+        if sample:
+            track_sample = self.tracks.sample(frac=0.1, random_state=2)
+        else:
+            track_sample = self.tracks
         return track_sample[selection]
 
+    def access_artist_names(self):
+        names = self.tracks['artist_names'].unique().tolist()
+        return names
 
-def create_feature_selection():
+
+def create_feature_selection(maximum=12):
     options = ['artist_pop', 'track_pop', 'danceability', 'energy', 'loudness', 'speechiness', 'acousticness',
                'instrumentalness', 'liveness', 'valences', 'durations_ms', 'tempos']
-    selected_option = st.multiselect('Select features', options, default='loudness')
+    selected_option = st.multiselect('Select features', options, default='loudness', max_selections=maximum)
     return selected_option
+
+
+def artist_matching(artists: str):
+    options = []
+    artist_names = re.split(r',|\|', artists)
+    pattern = re.compile(fr"\b(?:{'|'.join(map(re.escape, artist_names))})\b", re.IGNORECASE)
+    names = st.session_state.monitor.access_artist_names()
+    for name in names:
+        matches = re.findall(pattern, name)
+        if matches:
+            options.append(name)
+    print(options)
+    return options
 
 
 @st.cache_resource
@@ -66,25 +87,34 @@ def generate_pair_plot():
     return g.fig
 
 
-@st.cache_resource
-def generate_distribution(selection):
-    df = st.session_state.monitor.access_specific_features(selected_features)
-    scaler = MinMaxScaler(feature_range=(-1, 1))
-    columns = df.columns
+def generate_distribution(selection: list, artist_filter=None):
+    if artist_filter is None:
+        df = st.session_state.monitor.access_specific_features(selection)
+    else:
+        selection.append('artist_names')
+        print(selection)
+        df = st.session_state.monitor.access_specific_features(selection, sample=False)
+        df = df[df['artist_names'].isin(artist_filter)]  # Filter df to keep arist only tracks
+        selection.remove('artist_names')
+
+    scaler = MinMaxScaler(feature_range=(-1, 1))  # Normalize the data
+    columns = selection
     df[columns] = scaler.fit_transform(df[columns])
 
     sns.set()
     fig, ax = plt.subplots(figsize=(10, 6))
-    for feature in selection:
-        h = sns.kdeplot(data=df, x=feature, label=feature, fill=True)
 
-    ax.set_title('Acoustic Feature Distribution')
-    ax.set_xlabel('Value')
-    ax.set_ylabel('Density')
-    ax.legend()
+    if artist_filter is None:
+        for feature in selection:
+            h = sns.kdeplot(data=df, x=feature, label=feature, fill=True)
+        ax.set_title('Acoustic Feature Distribution')
+        ax.set_xlabel('Value')
+        ax.set_ylabel('Density')
+        ax.legend()
+    else:
+        h = sns.kdeplot(data=df, x=selection[0], hue='artist_names', fill=True)
+
     return fig
-
-
 
 
 if 'monitor' not in st.session_state:
@@ -124,6 +154,7 @@ st.pyplot(fig_2)
 st.markdown('#### Track Features Distribution')
 st.markdown('Please select a set of features to view their distributions in the dataset')
 selected_features = create_feature_selection()
+
 if len(selected_features) == 0:
     st.write('Please select a minimum of a single feature to be displayed')
 else:
@@ -131,4 +162,19 @@ else:
     st.pyplot(fig_3)
 
 
-st.markdown('#### Artist Popularity')
+st.markdown('#### Artist Comparison')
+st.markdown('Please enter the name of the artist/ band and select from the available options below in the dataset')
+st.markdown('This section aims to enable artist comparison and the underlying framework of how the recommendation bases its answers')
+
+search = st.text_input('Please type name')
+artist = []
+if len(search) != 0:
+    options = artist_matching(search)
+    artists = st.multiselect(label='Please select from the available artist in the dataset', options=options)
+    if len(artists) != 0:
+        feature = create_feature_selection(maximum=1)
+        fig_4 = generate_distribution(selection=feature, artist_filter=artists)
+        st.pyplot(fig_4)
+
+
+
