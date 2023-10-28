@@ -7,15 +7,57 @@ import seaborn as sns
 
 class Monitor:
     def __init__(self):
-        self.file_name = 'dataset_growth.csv'
+        self.history_name = 'dataset_growth.csv'
+        self.tracks_name = 'tracks.csv'
         self.root_path = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-        self.file_path = os.path.join(self.root_path, 'data', self.file_name)
-        self.history = pd.read_csv(self.file_path)
+        self.hist_path = os.path.join(self.root_path, 'data', self.history_name)
+        self.track_path = os.path.join(self.root_path, 'data', self.tracks_name)
+
+        self.history = pd.read_csv(self.hist_path)
+        self.tracks = pd.read_csv(self.track_path)
+
         self.history['date'] = pd.to_datetime(self.history['date'], format="%d-%m-%Y")
         self.history['time'] = pd.to_datetime(self.history['time'], format='%H:%M:%S')
 
     def determine_date_range(self):
         return self.history['date'].min(), self.history['date'].max()
+
+    def access_acoustic_sample_features(self):
+        track_sample = self.tracks.sample(frac=0.1, random_state=1)
+        acoustics_df = track_sample[['danceability', 'energy', 'loudness', 'speechiness',
+                                    'acousticness', 'instrumentalness']]
+        return acoustics_df
+
+
+def create_feature_selection():
+    options = ['Danceability', 'Energy', 'Keys', 'Loudness', 'Speechiness', 'Acousticness', 'Instrumentalness']
+
+    selected_option = st.radio(label="Select feature", options=options, horizontal=True)
+
+
+@st.cache_resource
+def generate_growth_plot(start, end):
+    df = st.session_state.monitor.history
+    history_filtered = df[(df['date'] >= start) & (df['date'] <= end)]
+
+    sns.set()
+    fig, axes = plt.subplots(1, 1, figsize=(12, 6))
+    h = sns.lineplot(data=history_filtered, x='date', y='track_count', color='black')
+    axes.fill_between(history_filtered['date'], history_filtered['track_count'], alpha=0.2, color='red')
+
+    axes.set_xlabel('Date')
+    axes.set_ylabel('Track Count')
+
+    return fig
+
+
+@st.cache_resource
+def generate_pair_plot():
+    sns.set()
+    df = st.session_state.monitor.access_acoustic_sample_features()
+    g = sns.pairplot(df, diag_kind='kde')
+    return g.fig
+
 
 
 if 'monitor' not in st.session_state:
@@ -33,23 +75,27 @@ start_date = st.slider(label='Select start date',
                        max_value=max_date.to_pydatetime())
 end_date = st.slider(label='Select end date',
                      min_value=min_date.to_pydatetime(),
-                     max_value=max_date.to_pydatetime())
+                     max_value=max_date.to_pydatetime(),
+                     value=max_date.to_pydatetime())
 
 if start_date >= end_date:
     st.write("Please make sure that start date comes before end date")
 else:
-    df = st.session_state.monitor.history
-    history_filtered = df[(df['date'] >= start_date) & (df['date'] <= end_date)]
-
-    sns.set()
-    fig, axes = plt.subplots(1, 1, figsize=(12, 6))
-    h = sns.lineplot(data=history_filtered, x='date', y='track_count', color='black')
-    axes.fill_between(history_filtered['date'], history_filtered['track_count'], alpha=0.2, color='red')
-
-    axes.set_xlabel('Date')
-    axes.set_ylabel('Track Count')
-
-    st.pyplot(fig)
+    fig_1 = generate_growth_plot(start_date, end_date)
+    st.pyplot(fig_1)
 
 
 st.header('Dataset Information')
+
+st.markdown('#### Acoustic Features')
+st.markdown('Please note that the below graphic is rendered using a sample of the dataset and a select set of '
+            'features to promote readability')
+
+fig_2 = generate_pair_plot()
+st.pyplot(fig_2)
+
+st.markdown('#### Track Features Distribution')
+st.markdown('Please select a maximum of 3 features to see their comparative distributions')
+create_feature_selection()
+
+st.markdown('#### Artist Popularity')
