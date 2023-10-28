@@ -3,6 +3,7 @@ import os
 import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
+from sklearn.preprocessing import MinMaxScaler
 
 
 class Monitor:
@@ -28,11 +29,17 @@ class Monitor:
                                     'acousticness', 'instrumentalness']]
         return acoustics_df
 
+    def access_specific_features(self, selection: list):
+        track_sample = self.tracks.sample(frac=0.1, random_state=2)
+        return track_sample[selection]
+
 
 def create_feature_selection():
-    options = ['Danceability', 'Energy', 'Keys', 'Loudness', 'Speechiness', 'Acousticness', 'Instrumentalness']
-
-    selected_option = st.radio(label="Select feature", options=options, horizontal=True)
+    options = ['artist_pop', 'track_pop', 'danceability', 'energy', 'loudness', 'speechiness', 'acousticness',
+               'instrumentalness', 'liveness', 'valences', 'durations_ms', 'tempos']
+    selected_option = st.multiselect('Select features', options, default='loudness')
+    print(selected_option)
+    return selected_option
 
 
 @st.cache_resource
@@ -53,10 +60,31 @@ def generate_growth_plot(start, end):
 
 @st.cache_resource
 def generate_pair_plot():
-    sns.set()
     df = st.session_state.monitor.access_acoustic_sample_features()
+
+    sns.set()
     g = sns.pairplot(df, diag_kind='kde')
     return g.fig
+
+
+@st.cache_resource
+def generate_distribution(selection):
+    df = st.session_state.monitor.access_specific_features(selected_features)
+    scaler = MinMaxScaler(feature_range=(-1, 1))
+    columns = df.columns
+    df[columns] = scaler.fit_transform(df[columns])
+
+    sns.set()
+    fig, ax = plt.subplots(figsize=(10, 6))
+    for feature in selection:
+        h = sns.kdeplot(data=df, x=feature, label=feature, fill=True)
+
+    ax.set_title('Acoustic Feature Distribution')
+    ax.set_xlabel('Value')
+    ax.set_ylabel('Density')
+    ax.legend()
+    return fig
+
 
 
 
@@ -95,7 +123,13 @@ fig_2 = generate_pair_plot()
 st.pyplot(fig_2)
 
 st.markdown('#### Track Features Distribution')
-st.markdown('Please select a maximum of 3 features to see their comparative distributions')
-create_feature_selection()
+st.markdown('Please select a set of features to view their distributions in the dataset')
+selected_features = create_feature_selection()
+if len(selected_features) == 0:
+    st.write('Please select a minimum of a single feature to be displayed')
+else:
+    fig_3 = generate_distribution(selected_features)
+    st.pyplot(fig_3)
+
 
 st.markdown('#### Artist Popularity')
