@@ -164,6 +164,7 @@ else:
 
 st.markdown('#### Artist Comparison')
 st.markdown('Please enter the name of the artist/ band and select from the available options below in the dataset')
+st.markdown('Each name must be seperated by a comma and include no whitespaces')
 st.markdown('This section aims to enable artist comparison and the underlying framework of how the recommendation bases its answers')
 
 search = st.text_input('Please type name')
