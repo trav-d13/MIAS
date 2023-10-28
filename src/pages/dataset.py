@@ -38,7 +38,6 @@ def create_feature_selection():
     options = ['artist_pop', 'track_pop', 'danceability', 'energy', 'loudness', 'speechiness', 'acousticness',
                'instrumentalness', 'liveness', 'valences', 'durations_ms', 'tempos']
     selected_option = st.multiselect('Select features', options, default='loudness')
-    print(selected_option)
     return selected_option
 
 
