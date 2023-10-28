@@ -42,7 +42,7 @@ def data_pipeline(df, tf=None):
     df = ohe_prep(df, 'time_signatures')
 
     # Normalize popularity values
-    scaler = MinMaxScaler(feature_range=(-1, 1))
+    scaler = MinMaxScaler(feature_range=(0, 1))
     columns = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valences', 'durations_ms', 'tempos']
     df[columns] = scaler.fit_transform(df[columns])
 
