@@ -50,6 +50,20 @@ def playlist_to_df(playlist: dict):
     return target_df
 
 
+def create_feature_weighting(maximum=12):
+    options = ['artist_pop', 'track_pop', 'danceability', 'energy', 'loudness', 'speechiness', 'acousticness',
+               'instrumentalness', 'liveness', 'valences', 'tempos', 'durations_ms', 'tempos']
+    selected_option = st.multiselect('Select features to weight', options, max_selections=maximum)
+    return selected_option
+
+def retrieve_feature_defs():
+    root_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    file_path = os.path.join(root_path, 'data', 'feature_def.txt')
+    with open(file_path, 'r') as file:
+        contents = file.read()
+        return contents
+
+
 ## UI ##
 if 'playlist_links' not in st.session_state:  # Initialize playlist history states
     st.session_state.playlist_links = []
@@ -62,9 +76,23 @@ st.markdown(
     "MIAS is the **M**usically **I**lliterate **A**id **S**ystem designed to help developing artists expand their "
     "performance playlist")
 
+# User input
 st.header("Search ")
 playlist_url = st.text_input("Please insert playlist url here")
 playlist_name = st.text_input("Please insert the playlist name here")
+
+# Feature weighting dropdown
+st.markdown(
+    '**For advanced recommender personalization please select the features to be weighted (have more importance) to '
+    'your search**')
+with st.expander('Feature Definitions'):
+    feature_defs = retrieve_feature_defs()
+    for definition in feature_defs.split('\\n'):
+        st.markdown(definition)
+
+with st.expander('Feature weighting (Optional)', expanded=False):
+    st.session_state.weighted_features = create_feature_weighting()
+
 submit_button = st.button("Submit")
 
 if submit_button:
@@ -72,7 +100,7 @@ if submit_button:
         df_playlist = retrieve_target_playlist(playlist_url, playlist_name)
         df_tracks = access_tracks()
 
-        st.session_state.similarity = CosineSimilarity(df_playlist, df_tracks)
+        st.session_state.similarity = CosineSimilarity(df_playlist, df_tracks, st.session_state.weighted_features)
         st.session_state.similarity.calculate_similarity()
         update_tracking(df_tracks)
 

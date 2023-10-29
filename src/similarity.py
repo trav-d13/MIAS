@@ -6,13 +6,15 @@ from similarity_interface import Similarity
 
 
 class CosineSimilarity(Similarity):
-    def __init__(self, playlist: pd.DataFrame, tracks: pd.DataFrame):
-        features, _ = data_pipeline(tracks)
+    def __init__(self, playlist: pd.DataFrame, tracks: pd.DataFrame, weighted_features: list):
+        self.additional_weighting = 2  # Feature weighting value
+        features, _ = data_pipeline(tracks)  # Pass data through pipeline to extract features
 
         self.playlist = playlist
         self.tracks = tracks
 
         self.playlist_features, self.track_features = self.separate_playlist_from_tracks(features)
+        self.weight_features(weighted_features)
         self.similarity = None
 
     def calculate_similarity(self):
@@ -40,3 +42,14 @@ class CosineSimilarity(Similarity):
     def vectorize_playlist(self):
         playlist_vector = self.playlist_features.mean(axis=0)
         return playlist_vector.to_numpy().reshape(1, -1)
+
+    def weight_features(self, weighted_columns: list):
+        all_features = pd.Series(self.track_features.columns)
+        feature_filter = all_features.isin(weighted_columns).tolist()   # Boolean filter based on if feature is in weighted columns
+        binary_filter = [int(feature) for feature in feature_filter]  # Modify boolean filter into a binary filter
+        filler = [1] * len(binary_filter)  # Create a filler of 1's to not effect features that have no weighting
+        weights = [(self.additional_weighting * weight) + fill for weight, fill in zip(binary_filter, filler)]  # Calculate feature scaler weights
+
+        self.track_features = self.track_features.mul(weights, axis=1)  # Weight features
+
+
