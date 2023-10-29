@@ -189,4 +189,16 @@ if len(search) != 0:
         st.pyplot(fig_4)
 
 
+st.header('Dataset Download')
+st.markdown('Please click the below button to download the Spotify tracks dataset as a csv file.')
+if st.button('Prepare Dataset for Download'):
+    with open(st.session_state.monitor.track_path, 'rb') as file:
+        data = file.read()
+
+    st.download_button(
+        label='Click to download dataset',
+        data=data,
+        file_name='tracks.csv',
+        key='download_dataset'
+    )
 
