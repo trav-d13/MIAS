@@ -41,6 +41,12 @@ class Monitor:
         names = self.tracks['artist_names'].unique().tolist()
         return names
 
+    def access_feature_definitions(self):
+        def_file = os.path.join(self.root_path, 'data', 'feature_def.txt')
+        with open(def_file, 'r') as file:
+            contents = file.read()
+            return contents
+
 
 def create_feature_selection(maximum=12):
     options = ['artist_pop', 'track_pop', 'danceability', 'energy', 'loudness', 'speechiness', 'acousticness',
@@ -143,6 +149,11 @@ else:
 
 
 st.header('Dataset Information')
+st.markdown('Please review the definitions tab in order to understand the available features.')
+with st.expander('Feature Definitions', expanded=False):
+    feature_defs = st.session_state.monitor.access_feature_definitions()
+    for definition in feature_defs.split('\\n'):
+        st.markdown(definition)
 
 st.markdown('#### Acoustic Features')
 st.markdown('Please note that the below graphic is rendered using a sample of the dataset and a select set of '

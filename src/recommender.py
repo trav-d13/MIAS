@@ -56,6 +56,13 @@ def create_feature_weighting(maximum=12):
     selected_option = st.multiselect('Select features to weight', options, max_selections=maximum)
     return selected_option
 
+def retrieve_feature_defs():
+    root_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    file_path = os.path.join(root_path, 'data', 'feature_def.txt')
+    with open(file_path, 'r') as file:
+        contents = file.read()
+        return contents
+
 
 ## UI ##
 if 'playlist_links' not in st.session_state:  # Initialize playlist history states
@@ -78,6 +85,11 @@ playlist_name = st.text_input("Please insert the playlist name here")
 st.markdown(
     '**For advanced recommender personalization please select the features to be weighted (have more importance) to '
     'your search**')
+with st.expander('Feature Definitions'):
+    feature_defs = retrieve_feature_defs()
+    for definition in feature_defs.split('\\n'):
+        st.markdown(definition)
+
 with st.expander('Feature weighting (Optional)', expanded=False):
     st.session_state.weighted_features = create_feature_weighting()
 
