@@ -1,14 +1,14 @@
 import pandas as pd
 from sklearn.metrics import pairwise as similarity_measures
 
-from pipeline import data_pipeline
+from pipeline import CosinePipeline
 from similarity_interface import Similarity
 
 
 class CosineSimilarity(Similarity):
     def __init__(self, playlist: pd.DataFrame, tracks: pd.DataFrame, weighted_features: list):
         self.additional_weighting = 2  # Feature weighting value
-        features, _ = data_pipeline(tracks)  # Pass data through pipeline to extract features
+        features, _ = CosinePipeline.data_pipeline(tracks)  # Pass data through pipeline to extract features
 
         self.playlist = playlist
         self.tracks = tracks
