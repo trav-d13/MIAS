@@ -11,11 +11,15 @@ from data_processing import target_playlist_extraction, save_data, update_tracki
 from similarity import CosineSimilarity
 
 
-def features_section():
+def feature_def_section():
+    """This method creates the features section in the Streamlit app.
+
+    Specifically, it creates the feature definitions drop down information.
+    """
     st.markdown(
         '**For advanced recommender personalization please select the features to be weighted (have more importance) to '
         'your search**')
-    # Feature definitions
+
     with st.expander('Feature Definitions'):
         feature_defs = retrieve_feature_defs()
         for definition in feature_defs.split('\\n'):
@@ -23,6 +27,11 @@ def features_section():
 
 
 def search_history_section():
+    """This method creates the search history section of the Streamlit application.
+
+    This section provides a drop-down that displays the search history in the from
+    playlist name | playlist url
+    """
     with st.expander("Search History", expanded=False):
         if len(st.session_state.playlist_links) == 0:
             st.markdown('No search history yet...')
@@ -32,6 +41,14 @@ def search_history_section():
 
 
 def search_results_section():
+    """This methods creates the search results section in the Streamlit app.
+
+    This can be broken down into two sub-sections.
+    1. Spotify Recommendations
+    2. The similarity visualization
+
+    Note, if no playlist or name is given, this section is replaced by a `Please perform search first` message
+    """
     st.header('Search Results')
     if st.session_state.similarity is None:
         st.write('Please perform a search first')
@@ -98,6 +115,10 @@ def access_tracks():
 
 
 def display_spotify_recommendations():
+    """Method deals with displaying the Spotify recommendations in the form of Spotify iFrames for each recommendation.
+
+    This section is composed of two columns, with 30 recommendations split evenly between them creating a 15 x 2 table.
+    """
     st.markdown("#### Recommended Tracks")
 
     col1, col2 = st.columns(2)
@@ -115,7 +136,6 @@ def display_spotify_recommendations():
             with col2:
                 st.markdown(embed_code, unsafe_allow_html=True)
         count += 1
-
 
 
 def playlist_to_df(playlist: dict):
@@ -163,7 +183,7 @@ def create_feature_weighting(maximum=12):
         maximum (int): The maximum number of features you can choose for weighting.
 
     Returns:
-        (list) A list of selected feature names.
+        (list): A list of selected feature names.
     """
     options = ['artist_pop', 'track_pop', 'danceability', 'energy', 'loudness', 'speechiness', 'acousticness',
                'instrumentalness', 'liveness', 'valences', 'tempos', 'durations_ms', 'tempos']
@@ -184,7 +204,7 @@ def retrieve_feature_defs():
         return contents
 
 
-## UI ##
+## UI Linear Process##
 if 'playlist_links' not in st.session_state:  # Initialize playlist history states
     st.session_state.playlist_links = []
     st.session_state.playlist_names = []
@@ -202,13 +222,10 @@ st.header("Search ")
 playlist_url = st.text_input("Please insert playlist url here")
 playlist_name = st.text_input("Please insert the playlist name here")
 
-
-features_section()
-
+feature_def_section()
 
 with st.expander('Feature weighting (Optional)', expanded=False):
     st.session_state.weighted_features = create_feature_weighting()
-
 
 submit_button = st.button("Submit")
 if submit_button:

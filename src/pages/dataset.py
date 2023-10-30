@@ -1,3 +1,5 @@
+import base64
+
 import streamlit as st
 import os
 import pandas as pd
@@ -192,6 +194,10 @@ st.markdown('Please click the below button to download the Spotify tracks datase
 if st.button('Prepare Dataset for Download'):
     with open(st.session_state.monitor.track_path, 'rb') as file:
         data = file.read()
+
+    bin_str = base64.b64encode(data).decode()
+    href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{os.path.basename("tracks.csv")}">Download Link</a>'
+    st.markdown(href, unsafe_allow_html=True)
 
     st.download_button(
         label='Click to download dataset',
