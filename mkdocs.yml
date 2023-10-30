@@ -1,0 +1,7 @@
+site_name: MIAS Documentation
+
+theme: readthedocs
+
+plugins:
+    - mkdocstrings
+    - search
