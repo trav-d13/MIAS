@@ -70,6 +70,8 @@ class CosinePipeline(Pipeline):
         - TFIDF transformation
         - Min-Max Scaling of numerical values
 
+        It is essential to note that all features are normalized between [0, 1]
+
         Args:
             df (DataFrame): The dataframe containing the raw data from the `data/tracks.csv` file
 

@@ -33,6 +33,7 @@ class Similarity(ABC):
     def get_top_n(self, n: int):
         """This method should return the top-n most similar tracks as a Dataframe with essential features included.
         Note, see `similarity.py` for an example implementation
+        Note, depending on your similarity calculation, be careful of the type of ordering you implement.
         """
         pass
 
