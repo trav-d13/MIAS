@@ -1,6 +1,7 @@
 site_name: MIAS Documentation
 
-theme: readthedocs
+theme:
+  name: material
 
 plugins:
     - mkdocstrings

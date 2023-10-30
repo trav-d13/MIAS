@@ -73,8 +73,8 @@ if 'playlist_links' not in st.session_state:  # Initialize playlist history stat
 
 st.title("MIAS")
 st.markdown(
-    "MIAS is the **M**usically **I**lliterate **A**id **S**ystem designed to help developing artists expand their "
-    "performance playlist")
+    "MIAS is the **M**usically **I**lliterate **A**id **S**ystem designed to help artists expand their "
+    "performance playlist by finding similar songs that match features essential to them")
 
 # User input
 st.header("Search ")
