@@ -20,12 +20,9 @@ class CosinePipeline(Pipeline):
         return df_encoded
 
     @staticmethod
-    def tfidf_transformation(df_parm, tf=None):
-        if tf is None:
-            tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 1), min_df=0.0, max_features=50)
-            tfidf_matrix = tf.fit_transform(df_parm['artist_genres'])
-        else:
-            tfidf_matrix = tf.transform(df_parm['artist_genres'])
+    def tfidf_transformation(df_parm):
+        tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 1), min_df=0.0, max_features=50)
+        tfidf_matrix = tf.fit_transform(df_parm['artist_genres'])
 
         genre_df = pd.DataFrame(tfidf_matrix.toarray(), columns=tf.get_feature_names_out())
         genre_df.columns = ['genre' + "|" + i for i in genre_df.columns]
@@ -36,7 +33,7 @@ class CosinePipeline(Pipeline):
         return combined_df, tf
 
     @staticmethod
-    def data_pipeline(df, tf=None):
+    def data_pipeline(df):
         df_pipe = CosinePipeline.select_columns(df)
 
         # Perform OHE
@@ -50,12 +47,12 @@ class CosinePipeline(Pipeline):
         df_pipe[columns] = scaler.fit_transform(df_pipe[columns])
 
         # Perform TFID vectorization on genres
-        df_pipe, tf = CosinePipeline.tfidf_transformation(df_parm=df_pipe, tf=tf)
+        df_pipe, tf = CosinePipeline.tfidf_transformation(df_parm=df_pipe)
 
         df_pipe = df_pipe.set_index(keys='uris', drop=True)
         print(f'Transform final shape {df_pipe.shape}')
 
-        return df_pipe, tf
+        return df_pipe
 
     @staticmethod
     def unique_tracks(df, df_target):

@@ -8,7 +8,7 @@ from similarity_interface import Similarity
 class CosineSimilarity(Similarity):
     def __init__(self, playlist: pd.DataFrame, tracks: pd.DataFrame, weighted_features: list):
         self.additional_weighting = 2  # Feature weighting value
-        features, _ = CosinePipeline.data_pipeline(tracks)  # Pass data through pipeline to extract features
+        features = CosinePipeline.data_pipeline(tracks)  # Pass data through pipeline to extract features
 
         self.playlist = playlist
         self.tracks = tracks
