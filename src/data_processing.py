@@ -50,13 +50,11 @@ def top_playlist_extraction(sp):
     """
     countries = ['AU', 'GB', 'US', 'CA', 'JM', 'ZA']
 
-    playlist_store = []  # Store for playlist names
-    name_store = []  # Construct playlist info storage
     tracks_store = construct_storage()  # Construct track info storage
 
     for country in countries:  # Iterate through countries
         print(f'Country: {country}')
-        top_playlists, names = find_top_playlists(country)  # Find top 20 playlists in each country
+        top_playlists, names = find_top_playlists(sp, country)  # Find top 20 playlists in each country
 
         for playlist, name in zip(top_playlists[:], names[:]):  # Iterate through playlists
             try:
@@ -68,8 +66,6 @@ def top_playlist_extraction(sp):
                 time.sleep(2)  # Respect APi limits through a forced sleep
             except Exception:
                 print(f"Error accessing playlist {name} tracks")
-
-        record_playlists(top_playlists, names, playlist_store, name_store)  # Record the playlist names aligned with each track
         print('-----------------------------------------------------------------------------')
 
     save_data(tracks_store)  # Save the data
@@ -274,39 +270,55 @@ def extract_tracks(sp, playlist_uri, store):
     extract_audio_features(store, sp)  # Extract the audio features for each track
 
 
-def find_top_playlists(country):
+def find_top_playlists(sp, country):
+    """Method finds the top-20 playlists in a given country
+
+    Args:
+        sp (Spotipy Authorization): The authorized spotipy credentials object
+        country (str): The ISO 3166-1 alpha-2 country code of where the playlist should be extracted from.
+
+    Returns:
+        uris (list): A list of uris linking to each of the found playlists
+        names (list): A related list of playlist names corresponding to the uris
+    """
     uris = []
     names = []
     playlists = sp.featured_playlists(country=country, limit=20)
     playlist_items = playlists['playlists']['items']
-    for item in playlist_items:
+
+    for item in playlist_items:  # Extract the uri and name from each playlist
         uris.append(item['uri'].split(':')[-1])
         names.append(item['name'])
     return uris, names
 
 
 def add_playlist_tracking(name, store):
+    """Method assigns the playlist name to each of the tracks to allow for traceback
+
+    Args:
+        name (str): The name of the playlist
+        store (dict): The object in which to store extracted information
+    """
     store['playlist_name'] = [name] * len(store['uris'])
 
 
-def record_playlists(top_playlists, names, playlist_store, name_store):
-    playlist_store.extend(top_playlists)
-    name_store.extend(names)
-
-
-
 def update_tracking(df):
-    root_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    """Method updates the `dataset_growth.csv` file when new tracks are added to the dataset to record dataset growth
+
+    Args:
+        df (DataFrame): The dataframe containing all stored tracks, including new additions
+    """
+    root_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))  # Read in the growth dataset
     file_path = os.path.join(root_path, 'data', 'dataset_growth.csv')
     tracking_df = pd.read_csv(file_path, index_col=0)
 
-    current_time = datetime.now()
+    current_time = datetime.now()  # Extract new features to update the growth dataset with
     new_length = df.shape[0]
     new_entry = pd.DataFrame.from_dict({'date': [current_time.strftime("%d-%m-%Y")],
                                         'time': [current_time.strftime("%H:%M:%S")],
                                         'track_count': [new_length]})
 
-    tracking_df = pd.concat([tracking_df, new_entry], axis=0, ignore_index=True)
+    tracking_df = pd.concat([tracking_df, new_entry], axis=0, ignore_index=True)  # Update growth dataset
     tracking_df.reset_index(drop=True)
     tracking_df.to_csv(file_path, mode='w')
 
