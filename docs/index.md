@@ -4,8 +4,9 @@
 aid artists add to their performance playlist by finding similar songs. 
 
 The following links provide access to the hosted MIAS service and source code: 
-- **MIAS:** https://mias-recommender-sys.streamlit.app/
-- **Source Code:** https://github.com/trav-d13/MIAS
+
+- **MIAS:** [https://mias-recommender-sys.streamlit.app/](https://mias-recommender-sys.streamlit.app/)
+- **Source Code:** [https://github.com/trav-d13/MIAS](https://github.com/trav-d13/MIAS)
 
 ![img.png](result_pic.png)
 
