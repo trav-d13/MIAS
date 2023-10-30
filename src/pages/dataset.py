@@ -197,6 +197,9 @@ def generate_distribution(selection: list):
 
     Args:
         selection (list): A list of features, such that their distributions will be visually compared.
+
+    Returns:
+        (PyPlot Figure): A figure showcasing the various acoustic feature distributions
     """
     df = st.session_state.monitor.access_specific_features(selection)
 
@@ -207,7 +210,7 @@ def generate_distribution(selection: list):
     sns.set()
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    for feature in selection:
+    for feature in selection:  # Overlay the feature distributions
         h = sns.kdeplot(data=df, x=feature, label=feature, fill=True)
     ax.set_title('Acoustic Feature Distribution')
     ax.set_xlabel('Value')
@@ -218,10 +221,13 @@ def generate_distribution(selection: list):
 
 
 def generate_artist_comparison(selection: list, artist_filter: list):
-    """
+    """Method generates a swarmplot enabling artist comparison across various acoustic features.
     Args:
         selection (list): A list of features, such that their distributions will be visually compared.
         artist_filter (list): A filter of artist names, if the distributions
+
+    Returns:
+        (PyPlot Figure): A swarmplot showing comparable artist acoustic features
     """
     selection.append('artist_names')
     df = st.session_state.monitor.access_specific_features(selection, sample=False)
@@ -238,23 +244,40 @@ def generate_artist_comparison(selection: list, artist_filter: list):
     return fig
 
 
+def date_sliders(start, end):
+    """Method creates the dataset growth date sliders, in order to determine the start and end date for visualizatin
+
+    Args:
+        start (datetime): Earliest available date in the history dataset
+        end (dadtetime): Latest available date in the history dataset.
+
+    Returns:
+        start_date (datetime): The slider selected start date
+        end_date (datetime): The slider selected end date
+    """
+    start_date = st.slider(label='Select start date',
+                           min_value=start.to_pydatetime(),
+                           max_value=end.to_pydatetime())
+    end_date = st.slider(label='Select end date',
+                         min_value=start.to_pydatetime(),
+                         max_value=end.to_pydatetime(),
+                         value=max_date.to_pydatetime())
+    return start_date, end_date
+
+
+# Initialize session state
 if 'monitor' not in st.session_state:
     st.session_state.monitor = Monitor()
 
+# Dataset page intro
 st.title("Spotify Dataset")
 st.markdown("The below information details the collected Spotify track dataset.")
 st.markdown("This dataset is updated bi-weekly with the latest playlists and is freely available to download.")
 
+# Dataset growth section
 st.header('Dataset Growth')
 min_date, max_date = st.session_state.monitor.determine_date_range()
-
-start_date = st.slider(label='Select start date',
-                       min_value=min_date.to_pydatetime(),
-                       max_value=max_date.to_pydatetime())
-end_date = st.slider(label='Select end date',
-                     min_value=min_date.to_pydatetime(),
-                     max_value=max_date.to_pydatetime(),
-                     value=max_date.to_pydatetime())
+start_date, end_date = date_sliders(min_date, max_date)
 
 if start_date >= end_date:
     st.write("Please make sure that start date comes before end date")
@@ -262,7 +285,7 @@ else:
     fig_1 = generate_growth_plot(start_date, end_date)
     st.pyplot(fig_1)
 
-
+# Dataset information section
 st.header('Dataset Information')
 st.markdown('Please review the definitions tab in order to understand the available features.')
 with st.expander('Feature Definitions', expanded=False):
@@ -270,13 +293,14 @@ with st.expander('Feature Definitions', expanded=False):
     for definition in feature_defs.split('\\n'):
         st.markdown(definition)
 
+# Acoustic features (pairplot)
 st.markdown('#### Acoustic Features')
 st.markdown('Please note that the below graphic is rendered using a sample of the dataset and a select set of '
             'features to promote readability')
-
 fig_2 = generate_pair_plot()
 st.pyplot(fig_2)
 
+# Track acoustic feature comparison
 st.markdown('#### Track Features Distribution')
 st.markdown('Please select a set of features to view their distributions in the dataset')
 selected_features = create_feature_selection()
@@ -287,7 +311,7 @@ else:
     fig_3 = generate_distribution(selected_features)
     st.pyplot(fig_3)
 
-
+# Artist comparison
 st.markdown('#### Artist Comparison')
 st.markdown('Please enter the name of the artist/ band and select from the available options below in the dataset')
 st.markdown('Each name must be seperated by a comma and include no whitespaces')
@@ -303,13 +327,9 @@ if len(search) != 0:
         fig_4 = generate_artist_comparison(selection=feature, artist_filter=artists)
         st.pyplot(fig_4)
 
-
+# Dataset download
 st.header('Datasets Download')
 st.markdown('Please click the below button to download the Spotify tracks dataset as a csv file.')
 if st.button('Prepare Dataset for Download'):
     datasets_download_section()
-
-
-
-
 
