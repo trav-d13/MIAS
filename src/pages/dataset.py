@@ -49,6 +49,14 @@ class Monitor:
 
 
 def create_feature_selection(maximum=12):
+    """Method creates a streamlit multiselection capability, in which a user can select acoustic featurs to be visualized
+
+    Args:
+        maximum (int): The maximum number of features that can be selected.
+
+    Returns:
+        (list): A list of selected feature names
+    """
     options = ['artist_pop', 'track_pop', 'danceability', 'energy', 'loudness', 'speechiness', 'acousticness',
                'instrumentalness', 'liveness', 'valences', 'durations_ms', 'tempos']
     selected_option = st.multiselect('Select features', options, default='loudness', max_selections=maximum)
@@ -56,6 +64,13 @@ def create_feature_selection(maximum=12):
 
 
 def artist_matching(artists: str):
+    """Method performs a regex search against all artists in the database, using the artists search query.
+
+    Args:
+        artists (str): A search pattern of artists names (expect the string to be of format name,name,name with no whitespaces)
+    Returns:
+        (list): A list of matching artist names which the user can then select from.
+    """
     options = []
     artist_names = re.split(r',|\|', artists)
     pattern = re.compile(fr"\b(?:{'|'.join(map(re.escape, artist_names))})\b", re.IGNORECASE)
@@ -69,6 +84,15 @@ def artist_matching(artists: str):
 
 @st.cache_resource
 def generate_growth_plot(start, end):
+    """This method generates a line plot showcasing the number of unique tracks in the dataset over time, showcasing its growth
+
+    Args:
+        start (datetime): The starting datetime to visualize the dataset growth
+        end (datetime): The end datetime to visualize the dataset growth
+
+    Returns:
+        (PyPlot Figure): A line plot figure showcasing the dataset growth over time
+    """
     df = st.session_state.monitor.history
     history_filtered = df[(df['date'] >= start) & (df['date'] <= end)]
 
@@ -85,11 +109,41 @@ def generate_growth_plot(start, end):
 
 @st.cache_resource
 def generate_pair_plot():
+    """This function generates a pair plot showcasing the relationship between acoustic analysis features of the tracks in the dataset.
+
+    Returns:
+        (PyPlot Figure): A pyplot figure showcasing the acoustic feature relationships
+    """
     df = st.session_state.monitor.access_acoustic_sample_features()
 
     sns.set()
     g = sns.pairplot(df, diag_kind='kde')
     return g.fig
+
+
+def datasets_download():
+    """Method prepares the `tracks.csv` and the `dataset_growth.csv` files for download."""
+    # Tracks download
+    with open(st.session_state.monitor.track_path, 'rb') as file:
+        data = file.read()
+
+    st.download_button(
+        label='Click to download tracks dataset',
+        data=data,
+        file_name='tracks.csv',
+        key='download_dataset'
+    )
+
+    # Growth download
+    with open(st.session_state.monitor.hist_path, 'rb') as history_file:
+        data_hist = history_file.read()
+
+    st.download_button(
+        label='Click to download tracks growth dataset',
+        data=data_hist,
+        file_name='dataset_growth.csv',
+        key='download_dataset_growth'
+    )
 
 
 def generate_distribution(selection: list, artist_filter=None):
@@ -190,25 +244,7 @@ if len(search) != 0:
 st.header('Datasets Download')
 st.markdown('Please click the below button to download the Spotify tracks dataset as a csv file.')
 if st.button('Prepare Dataset for Download'):
-    with open(st.session_state.monitor.track_path, 'rb') as file:
-        data = file.read()
-
-    st.download_button(
-        label='Click to download tracks dataset',
-        data=data,
-        file_name='tracks.csv',
-        key='download_dataset'
-    )
-
-    with open(st.session_state.monitor.hist_path, 'rb') as history_file:
-        data_hist = history_file.read()
-
-    st.download_button(
-        label='Click to download tracks growth dataset',
-        data=data_hist,
-        file_name='dataset_growth.csv',
-        key='download_dataset_growth'
-    )
+    datasets_download()
 
 
 
