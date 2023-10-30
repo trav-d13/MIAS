@@ -4,10 +4,9 @@ from datetime import datetime
 
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+import streamlit as st
 
 import pandas as pd
-
-from credentials import set_credentials
 
 
 def construct_storage():
@@ -225,12 +224,10 @@ def update_tracking(df):
     tracking_df.to_csv(file_path, mode='w')
 
 
-
 if __name__ == "__main__":
-    set_credentials()
-
-    client_credentials_manager = SpotifyClientCredentials(client_id=os.getenv('CLIENT_ID'),
-                                                          client_secret=os.getenv('CLIENT_SECRET'))
+    client_credentials_manager = SpotifyClientCredentials(client_id=st.secrets['CLIENT_ID'],
+                                                          client_secret=st.secrets[
+                                                              'CLIENT_SECRET'])
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
     url = "https://open.spotify.com/playlist/799B2k7VQhsWeA2iQrun9f?si=345d3d94fb484f2c"
