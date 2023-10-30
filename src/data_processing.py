@@ -257,13 +257,11 @@ def extract_tracks(sp, playlist_uri, store):
     limit = 100
     playlist = sp.playlist_tracks(playlist_uri, limit=2, offset=offset)  # Retrieve the initial batch of songs
     total_songs = playlist['total']  # Extract the total number of songs
-    print(f"Total songs: {total_songs}")
 
     while offset < total_songs:
         time.sleep(2)
         playlist = sp.playlist_tracks(playlist_uri, limit=100, offset=offset)  # Retrieve batch of songs in playlist
         store = retrieve_batch_info(playlist, store)  # Retrieve batch information
-        print(f"Current offset: {offset}")
         offset = offset + limit  # Update offset
 
     extract_artist_info(store, sp)  # Extract the artist features for each track

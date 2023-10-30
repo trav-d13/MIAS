@@ -64,7 +64,6 @@ def artist_matching(artists: str):
         matches = re.findall(pattern, name)
         if matches:
             options.append(name)
-    print(options)
     return options
 
 
@@ -98,7 +97,6 @@ def generate_distribution(selection: list, artist_filter=None):
         df = st.session_state.monitor.access_specific_features(selection)
     else:
         selection.append('artist_names')
-        print(selection)
         df = st.session_state.monitor.access_specific_features(selection, sample=False)
         df = df[df['artist_names'].isin(artist_filter)]  # Filter df to keep arist only tracks
         selection.remove('artist_names')
