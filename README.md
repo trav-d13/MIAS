@@ -1,7 +1,10 @@
 # Musically Illiterate Aid System (MIAS)
 Content covering basic content and collaborative filtering recommender systems culminating in a Spotify song recommendation system.
 
+The hosted and running application can be found at: [https://mias-recommender-sys.streamlit.app/](https://mias-recommender-sys.streamlit.app/)
+
 ## Developer
+Please make use of the Developer documentation available here: [https://trav-d13.github.io/MIAS/](https://trav-d13.github.io/MIAS/).
 
 ### Project Structure
 ```
