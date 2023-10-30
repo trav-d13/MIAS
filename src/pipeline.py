@@ -2,85 +2,131 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-#TODO Modify Pipeline into a modular build allowing various pipelines to be built
-
-def select_columns(df):
-    df = df[['uris', 'artist_pop',
-             'artist_genres', 'track_pop', 'danceability', 'energy',
-             'keys', 'loudness', 'modes', 'speechiness', 'acousticness',
-             'instrumentalness', 'liveness', 'valences', 'tempos', 'durations_ms', 'time_signatures']]
-    return df
+from pipeline_interface import Pipeline
 
 
-def ohe_prep(df, column):
-    df_encoded = pd.get_dummies(df, columns=[column], dtype=int)
-    return df_encoded
+class CosinePipeline(Pipeline):
+    """This class serves as the transformation pipeline from raw data to usable features, for the similarity calculation
+    carried out by the Cosine Similarity class."""
 
+    @staticmethod
+    def select_columns(df):
+        """This method selects the columns to be included within feature calculations.
 
-def tfidf_transformation(df_parm, tf=None):
-    if tf is None:
+        This method, allows for the ignoring/ removal of peripheral or uneeded columns.
+
+        Args:
+            df (DataFrame): The dataframe containing the raw data from the `data/tracks.csv` file
+
+        Returns:
+            (DataFrame): The modified dataframe object containing only the select columns.
+        """
+        df = df[['uris', 'artist_pop',
+                 'artist_genres', 'track_pop', 'danceability', 'energy',
+                 'keys', 'loudness', 'modes', 'speechiness', 'acousticness',
+                 'instrumentalness', 'liveness', 'valences', 'tempos', 'durations_ms', 'time_signatures']]
+        return df
+
+    @staticmethod
+    def ohe_prep(df, column):
+        """This method performs a One-Hot-Encoding (OHE) on a specified column
+
+        Args:
+            df (DataFrame): The dataframe containing the tracks information, now being processes by the pipeline.
+            column (str): The name of the column on which the OHE transformation should be performed.
+        """
+        df_encoded = pd.get_dummies(df, columns=[column], dtype=int)
+        return df_encoded
+
+    @staticmethod
+    def tfidf_transformation(df_parm):
+        """This method performs the term frequency–inverse document frequency (tfidf) transformation on the `artist genre` column.
+
+        Note, more information on tfidf transformation can be found here: https://www.geeksforgeeks.org/understanding-tf-idf-term-frequency-inverse-document-frequency/
+
+        Args:
+            df_parm (DataFrame): The dataframe containing the tracks information, now undergoing tfidg transfromation
+
+        Returns:
+            (DataFrame): The transformed dataframe containing the results of the tfidf transfromation.
+        """
         tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 1), min_df=0.0, max_features=50)
         tfidf_matrix = tf.fit_transform(df_parm['artist_genres'])
-    else:
-        tfidf_matrix = tf.transform(df_parm['artist_genres'])
 
-    genre_df = pd.DataFrame(tfidf_matrix.toarray(), columns=tf.get_feature_names_out())
-    genre_df.columns = ['genre' + "|" + i for i in genre_df.columns]
+        genre_df = pd.DataFrame(tfidf_matrix.toarray(), columns=tf.get_feature_names_out())
+        genre_df.columns = ['genre' + "|" + i for i in genre_df.columns]
 
-    df_parm = df_parm.drop(columns=['artist_genres'])
+        df_parm = df_parm.drop(columns=['artist_genres'])
 
-    combined_df = pd.concat([df_parm.reset_index(drop=True), genre_df.reset_index(drop=True)], axis=1)
-    return combined_df, tf
+        combined_df = pd.concat([df_parm.reset_index(drop=True), genre_df.reset_index(drop=True)], axis=1)
+        return combined_df
 
+    @staticmethod
+    def data_pipeline(df):
+        """This method enacts the transformation pipeline to produce a set of track features.
 
-def data_pipeline(df, tf=None):
-    df = select_columns(df)
+        This pipeline makes use of the following transformation methods:
+        - One-hot_encoding
+        - TFIDF transformation
+        - Min-Max Scaling of numerical values
 
-    # Perform OHE
-    df = ohe_prep(df, 'modes')
-    df = ohe_prep(df, 'keys')
-    df = ohe_prep(df, 'time_signatures')
+        It is essential to note that all features are normalized between [0, 1]
 
-    # Normalize popularity values
-    scaler = MinMaxScaler(feature_range=(0, 1))
-    columns = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valences', 'durations_ms', 'tempos']
-    df[columns] = scaler.fit_transform(df[columns])
+        Args:
+            df (DataFrame): The dataframe containing the raw data from the `data/tracks.csv` file
 
-    # Perform TFID vectorization on genres
-    df, tf = tfidf_transformation(df_parm=df, tf=tf)
+        Returns:
+              (DataFrame): A dataframe containing all track features
+        """
 
-    df = df.set_index(keys='uris', drop=True)
-    print(f'Transform final shape {df.shape}')
+        df_pipe = CosinePipeline.select_columns(df)
 
-    return df, tf
+        # Perform OHE
+        df_pipe = CosinePipeline.ohe_prep(df_pipe, 'modes')
+        df_pipe = CosinePipeline.ohe_prep(df_pipe, 'keys')
+        df_pipe = CosinePipeline.ohe_prep(df_pipe, 'time_signatures')
 
+        # Normalize popularity values
+        scaler = MinMaxScaler(feature_range=(0, 1))
+        columns = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valences', 'durations_ms', 'tempos']
+        df_pipe[columns] = scaler.fit_transform(df_pipe[columns])
 
-def unique_tracks(df, df_target):
-    df = df.drop(df_target['uris'], errors='ignore')
-    return df
+        # Perform TFID vectorization on genres
+        df_pipe = CosinePipeline.tfidf_transformation(df_parm=df_pipe)
 
+        df_pipe = df_pipe.set_index(keys='uris', drop=True)
 
-def extract_target(df, df_target):
-    target_uris = df_target['uris'].tolist()
-    return df[df.index.isin(target_uris)]
+        return df_pipe
 
+    @staticmethod
+    def unique_tracks(df, df_target):
+        """Method ensures that df (tracks dataframe) does not contain the same tracks as the playlist (df_target)
 
-if __name__ == "__main__":
-    df_target = pd.read_csv('../data/target.csv', index_col=0)
-    df = pd.read_csv('../data/tracks.csv', index_col=0)
+        Args:
+            df (DataFrame): The dataframe containing the tracks dataset.
+            df_target (DataFrame): The dataframe containing the tracks from the playlist
 
-    dataset_complete = pd.concat([df_target, df], axis=0)
-    dataset_complete = dataset_complete.reset_index(drop=True)
-    print(f'prior {dataset_complete.shape}')
+        Returns:
+            (DataFrame): The tracks dataframe containing none of the same tracks as in the playlist.
+        """
+        df = df.drop(df_target['uris'], errors='ignore')
+        return df
 
-    dataset_complete = dataset_complete.drop_duplicates(subset='uris', keep='first')
-    print(f'After duplicate drop {dataset_complete.shape}')
+    @staticmethod
+    def extract_target(df, df_target):
+        """This method allows for the extraction of tracks in the playlist from the tracks dataset.
+        Note, for this method to work, the track uris should be the index in the tracks dataframe (df).
 
-    dataset_complete, _ = data_pipeline(df=dataset_complete)
-    print(f'After feature creation {dataset_complete.shape}')
+        This method is largely used once the tracks dataset has been transformed into a set of features,
+        and the playlist track features are required to be extracted.
 
-    target_features = extract_target(dataset_complete, df_target)
-    print(target_features.shape)
+        Args:
+            df (DataFrame): The dataframe containing the tracks dataset.
+            df_target (DataFrame): The dataframe containing the tracks from the playlist
 
-    df_unique = unique_tracks(dataset_complete, df_target)
-    print(df_unique.shape)
+        Returns:
+            (DataFrame): A resulting dataframe containing only the tracks from the playlist that were in the tracks dataset.
+        """
+        target_uris = df_target['uris'].tolist()
+        return df[df.index.isin(target_uris)]
+
