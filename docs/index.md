@@ -9,7 +9,8 @@ The following links provide access to the hosted MIAS service and source code:
 
 ![img.png](result_pic.png)
 
-**This project encourages collaboration!** \
+**This project encourages collaboration!** 
+
 _Whether you are new to recommender systems or a pro.
 The project embraced a modular design so that you can test out your own data pipelines and similarity metrics
 in a way where you can easily see and deploy your results_
@@ -20,3 +21,4 @@ This section provides access to the extensive documentation underlying the MIAS 
 - [Data Processing](data_processing.md)
 - [Similarity Interface](similarity_interface.md)
 - [Pipeline interface](pipeline_interface.md)
+- [Pipeline](pipeline.md)
