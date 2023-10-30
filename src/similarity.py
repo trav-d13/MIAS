@@ -5,7 +5,7 @@ from pipeline import CosinePipeline
 from similarity_interface import Similarity
 
 
-class CosineSimilarity(Similarity):
+class TracksCosineSimilarity(Similarity):
     """The class implements a Cosine similarity between a playlist vector and the tracks dataset to determine
         similar tracks to the playlist.
 

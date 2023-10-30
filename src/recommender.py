@@ -8,7 +8,7 @@ import os
 
 # Scripts
 from data_processing import target_playlist_extraction, save_data, update_tracking
-from similarity import CosineSimilarity
+from similarity import TracksCosineSimilarity
 
 
 def feature_def_section():
@@ -73,7 +73,7 @@ def playlist_submission():
     df_playlist = retrieve_target_playlist(playlist_url, playlist_name)
     df_tracks = access_tracks()
 
-    st.session_state.similarity = CosineSimilarity(df_playlist, df_tracks, st.session_state.weighted_features)
+    st.session_state.similarity = TracksCosineSimilarity(df_playlist, df_tracks, st.session_state.weighted_features)
     st.session_state.similarity.calculate_similarity()
     update_tracking(df_tracks)
 

@@ -1,5 +1,3 @@
-import base64
-
 import streamlit as st
 import os
 import pandas as pd
@@ -189,20 +187,30 @@ if len(search) != 0:
         st.pyplot(fig_4)
 
 
-st.header('Dataset Download')
+st.header('Datasets Download')
 st.markdown('Please click the below button to download the Spotify tracks dataset as a csv file.')
 if st.button('Prepare Dataset for Download'):
     with open(st.session_state.monitor.track_path, 'rb') as file:
         data = file.read()
 
-    bin_str = base64.b64encode(data).decode()
-    href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{os.path.basename("tracks.csv")}">Download Link</a>'
-    st.markdown(href, unsafe_allow_html=True)
-
     st.download_button(
-        label='Click to download dataset',
+        label='Click to download tracks dataset',
         data=data,
         file_name='tracks.csv',
         key='download_dataset'
     )
+
+    with open(st.session_state.monitor.hist_path, 'rb') as history_file:
+        data_hist = history_file.read()
+
+    st.download_button(
+        label='Click to download tracks growth dataset',
+        data=data_hist,
+        file_name='dataset_growth.csv',
+        key='download_dataset_growth'
+    )
+
+
+
+
 
