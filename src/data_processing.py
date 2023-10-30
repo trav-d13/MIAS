@@ -180,15 +180,21 @@ def process_items(store, items):
 
 
 def extract_artist_info(store, sp):
+    """Method deals with extracting artist information from the `artists()` API call through Spotipy
+
+    Args:
+        store (dict): The object in which to store extracted information
+        sp (Spotipy Authorization): The authorized spotipy credentials object
+    """
     limit = 50
     offset = 0
     while offset < len(store['artist_uris']):
-        if offset + limit > len(store['artist_uris']):
-            artists_info = sp.artists(store['artist_uris'][offset: len(store['artist_uris'])])
+        if offset + limit > len(store['artist_uris']):  # If else, deals with batching
+            artists_info = sp.artists(store['artist_uris'][offset: len(store['artist_uris'])])  # Gather artis info through API
         else:
-            artists_info = sp.artists(store['artist_uris'][offset: offset + limit])
+            artists_info = sp.artists(store['artist_uris'][offset: offset + limit])  # Gather artis info through API
 
-        for artist in artists_info['artists']:
+        for artist in artists_info['artists']:  # Extract popularity and genres from each artist
             store['artist_pop'].append(artist['popularity'])  # Access artist popularity
             store['artist_genres'].append(artist['genres'])  # Access artist genres
 
@@ -196,15 +202,21 @@ def extract_artist_info(store, sp):
 
 
 def extract_audio_features(store, sp):
+    """Method deal with extracting audio analysis features for a given batch of tracks
+
+    Args:
+        store (dict): The object in which to store extracted information
+        sp (Spotipy Authorization): The authorized spotipy credentials object
+    """
     limit = 100
     offset = 0
     while offset < len(store['uris']):
-        if offset + limit > len(store['uris']):
+        if offset + limit > len(store['uris']):   # If else, deals with batching of acoustic features
             track_info = sp.audio_features(store['uris'][offset: len(store['uris'])])
         else:
             track_info = sp.audio_features(store['uris'][offset: offset + limit])
 
-        for track in track_info:
+        for track in track_info:  # For each track extract the necessary features and store it
             store['danceability'].append(track['danceability'])
             store['energy'].append(track['energy'])
             store['keys'].append(track['key'])
@@ -227,11 +239,24 @@ def extract_audio_features(store, sp):
 
 
 def merge_stores(tracks_store, store):
+    """Method deals with merging one store into another
+    Args:
+        store (dict): The track storage object to be merged.
+        tracks_store (dict): The larger object in which to merge store into
+    """
     for key, value in store.items():
         tracks_store[key].extend(value)
 
 
 def extract_tracks(sp, playlist_uri, store):
+    """Method deals with extracting tracks from a given playlist
+    Note, this method forms the cornerstone of extraction, providing track access from a playlist.
+
+    Args:
+        sp (Spotipy Authorization): The authorized spotipy credentials object
+        playlist_uri (str): The URI of the Spotify playlist
+        store (dict): The object in which to store extracted information
+    """
     offset = 0
     limit = 100
     playlist = sp.playlist_tracks(playlist_uri, limit=2, offset=offset)  # Retrieve the initial batch of songs
@@ -245,8 +270,8 @@ def extract_tracks(sp, playlist_uri, store):
         print(f"Current offset: {offset}")
         offset = offset + limit  # Update offset
 
-    extract_artist_info(store, sp)
-    extract_audio_features(store, sp)
+    extract_artist_info(store, sp)  # Extract the artist features for each track
+    extract_audio_features(store, sp)  # Extract the audio features for each track
 
 
 def find_top_playlists(country):
