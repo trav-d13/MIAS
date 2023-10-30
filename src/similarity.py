@@ -83,9 +83,9 @@ class CosineSimilarity(Similarity):
         Args:
             features (DataFrame): The track dataset features dataframe (This contains the playlist tracks too)
 
-            Returns:
-                playlist_features (DataFrame): The playlist track features dataframe
-                tracks_features (DataFrame): The track dataset features dataframe
+        Returns:
+            playlist_features (Dataframe): The playlist track features dataframe
+            tracks_features (DataFrame): The track dataset features dataframe
         """
         playlist_uris = self.playlist['uris'].tolist()
         return features[features.index.isin(playlist_uris)], features[~features.index.isin(playlist_uris)]

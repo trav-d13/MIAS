@@ -1,8 +1,8 @@
 ## Cosine Pipeline
-This file provides the framework for the transformation pipeline from raw tracks to a set of features
+This file provides the transformation pipeline from raw tracks to a set of track features
 ready for use by the Cosine Similarity class.
 
-Pipeline inherits from the Pipeline Interface class.
+Pipeline inherits from the Pipeline Interface.
 
-## Pipeline Interface Documentation
+## Pipeline Documentation
 ::: src.pipeline
