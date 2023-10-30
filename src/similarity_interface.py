@@ -17,13 +17,30 @@ class Similarity(ABC):
     """
     @abstractmethod
     def calculate_similarity(self):
+        """Method calculates the similarity of each track in the dataset to the given playlist feature vector
+
+        Note, this method should populate a field called `self.similarity`, such that it represents a similarity score of
+        each track to playlist vector. Please see `similarity.py` for an example implementation.
+        """
         pass
 
     @abstractmethod
     def access_similarity_scores(self):
+        """This method is a getter method providing access to the similarity metrics calculated in `calculate_similarity()`"""
         pass
 
     @abstractmethod
     def get_top_n(self, n: int):
+        """This method should return the top-n most similar tracks as a Dataframe with essential features included.
+        Note, see `similarity.py` for an example implementation
+        """
+        pass
+
+    @abstractmethod
+    def weight_features(self, weighted_columns: list):
+        """This method allows for specific features to be weighted or have a more significant impact on the measures of similarity.
+        Note, weighting may vary depending on the method of similarity calculation. Please see `similarity.py` for an example
+        implementation
+        """
         pass
 
