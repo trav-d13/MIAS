@@ -1,0 +1,2182 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../dataset/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.7">
+    
+    
+      
+        <title>Data processing - MIAS Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.4b4a2bd9.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#data-processing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="MIAS Documentation" class="md-header__button md-logo" aria-label="MIAS Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MIAS Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Data processing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="MIAS Documentation" class="md-nav__button md-logo" aria-label="MIAS Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    MIAS Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Welcome to MIAS Documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Data processing
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Data processing
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-processing" class="md-nav__link">
+    Data Processing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-processing-documentation" class="md-nav__link">
+    Data Processing Documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing" class="md-nav__link">
+    data_processing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.add_playlist_tracking" class="md-nav__link">
+    add_playlist_tracking()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.construct_storage" class="md-nav__link">
+    construct_storage()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.extract_artist_info" class="md-nav__link">
+    extract_artist_info()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.extract_audio_features" class="md-nav__link">
+    extract_audio_features()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.extract_tracks" class="md-nav__link">
+    extract_tracks()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.find_top_playlists" class="md-nav__link">
+    find_top_playlists()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.merge_stores" class="md-nav__link">
+    merge_stores()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.process_items" class="md-nav__link">
+    process_items()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.retrieve_batch_info" class="md-nav__link">
+    retrieve_batch_info()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.save_data" class="md-nav__link">
+    save_data()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.target_playlist_extraction" class="md-nav__link">
+    target_playlist_extraction()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.top_playlist_extraction" class="md-nav__link">
+    top_playlist_extraction()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.update_tracking" class="md-nav__link">
+    update_tracking()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.url2uri" class="md-nav__link">
+    url2uri()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dataset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dataset
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline_interface/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pipeline interface
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recommender/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Recommender
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../similarity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Similarity
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../similarity_interface/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Similarity interface
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-processing" class="md-nav__link">
+    Data Processing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-processing-documentation" class="md-nav__link">
+    Data Processing Documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing" class="md-nav__link">
+    data_processing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.add_playlist_tracking" class="md-nav__link">
+    add_playlist_tracking()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.construct_storage" class="md-nav__link">
+    construct_storage()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.extract_artist_info" class="md-nav__link">
+    extract_artist_info()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.extract_audio_features" class="md-nav__link">
+    extract_audio_features()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.extract_tracks" class="md-nav__link">
+    extract_tracks()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.find_top_playlists" class="md-nav__link">
+    find_top_playlists()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.merge_stores" class="md-nav__link">
+    merge_stores()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.process_items" class="md-nav__link">
+    process_items()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.retrieve_batch_info" class="md-nav__link">
+    retrieve_batch_info()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.save_data" class="md-nav__link">
+    save_data()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.target_playlist_extraction" class="md-nav__link">
+    target_playlist_extraction()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.top_playlist_extraction" class="md-nav__link">
+    top_playlist_extraction()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.update_tracking" class="md-nav__link">
+    update_tracking()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.data_processing.url2uri" class="md-nav__link">
+    url2uri()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Data processing</h1>
+
+<h2 id="data-processing">Data Processing</h2>
+<p>This file forms the basis of Spotify data processing.</p>
+<h2 id="data-processing-documentation">Data Processing Documentation</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.data_processing"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.add_playlist_tracking" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">add_playlist_tracking</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method assigns the playlist name to each of the tracks to allow for traceback</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the playlist</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>store</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The object in which to store extracted information</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_playlist_tracking</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method assigns the playlist name to each of the tracks to allow for traceback</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): The name of the playlist</span>
+<span class="sd">        store (dict): The object in which to store extracted information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">store</span><span class="p">[</span><span class="s1">&#39;playlist_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="s1">&#39;uris&#39;</span><span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.construct_storage" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">construct_storage</span><span class="p">()</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method constructs the storage dictionary in which collected track information is stored during collection,
+and enables saving as a csv file.</p>
+
+
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>dict</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>An dictionary with each of the features initialized as keys, with associated empty list values.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">construct_storage</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method constructs the storage dictionary in which collected track information is stored during collection,</span>
+<span class="sd">    and enables saving as a csv file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (dict): An dictionary with each of the features initialized as keys, with associated empty list values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">store_outline</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;uris&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;artist_names&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;artist_uris&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;artist_pop&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;artist_genres&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;albums&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;track_pop&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;danceability&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;keys&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;loudness&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;modes&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;speechiness&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;acousticness&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;instrumentalness&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;liveness&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;valences&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;tempos&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;ids&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;track_hrefs&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;analysis_urls&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;durations_ms&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;time_signatures&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;playlist_name&#39;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">store_outline</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.extract_artist_info" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">extract_artist_info</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">sp</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method deals with extracting artist information from the <code>artists()</code> API call through Spotipy</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>store</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The object in which to store extracted information</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>sp</code></td>
+          <td>
+                <code>Spotipy Authorization</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The authorized spotipy credentials object</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">extract_artist_info</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">sp</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method deals with extracting artist information from the `artists()` API call through Spotipy</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        store (dict): The object in which to store extracted information</span>
+<span class="sd">        sp (Spotipy Authorization): The authorized spotipy credentials object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">limit</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="s1">&#39;artist_uris&#39;</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="s1">&#39;artist_uris&#39;</span><span class="p">]):</span>  <span class="c1"># If else, deals with batching</span>
+            <span class="n">artists_info</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">artists</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="s1">&#39;artist_uris&#39;</span><span class="p">][</span><span class="n">offset</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="s1">&#39;artist_uris&#39;</span><span class="p">])])</span>  <span class="c1"># Gather artis info through API</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">artists_info</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">artists</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="s1">&#39;artist_uris&#39;</span><span class="p">][</span><span class="n">offset</span><span class="p">:</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">limit</span><span class="p">])</span>  <span class="c1"># Gather artis info through API</span>
+
+        <span class="k">for</span> <span class="n">artist</span> <span class="ow">in</span> <span class="n">artists_info</span><span class="p">[</span><span class="s1">&#39;artists&#39;</span><span class="p">]:</span>  <span class="c1"># Extract popularity and genres from each artist</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;artist_pop&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">artist</span><span class="p">[</span><span class="s1">&#39;popularity&#39;</span><span class="p">])</span>  <span class="c1"># Access artist popularity</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;artist_genres&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">artist</span><span class="p">[</span><span class="s1">&#39;genres&#39;</span><span class="p">])</span>  <span class="c1"># Access artist genres</span>
+
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">limit</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.extract_audio_features" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">extract_audio_features</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">sp</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method deal with extracting audio analysis features for a given batch of tracks</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>store</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The object in which to store extracted information</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>sp</code></td>
+          <td>
+                <code>Spotipy Authorization</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The authorized spotipy credentials object</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">extract_audio_features</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">sp</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method deal with extracting audio analysis features for a given batch of tracks</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        store (dict): The object in which to store extracted information</span>
+<span class="sd">        sp (Spotipy Authorization): The authorized spotipy credentials object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="s1">&#39;uris&#39;</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="s1">&#39;uris&#39;</span><span class="p">]):</span>   <span class="c1"># If else, deals with batching of acoustic features</span>
+            <span class="n">track_info</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">audio_features</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="s1">&#39;uris&#39;</span><span class="p">][</span><span class="n">offset</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="s1">&#39;uris&#39;</span><span class="p">])])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">track_info</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">audio_features</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="s1">&#39;uris&#39;</span><span class="p">][</span><span class="n">offset</span><span class="p">:</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">limit</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">track</span> <span class="ow">in</span> <span class="n">track_info</span><span class="p">:</span>  <span class="c1"># For each track extract the necessary features and store it</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;danceability&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;danceability&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;keys&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;loudness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;loudness&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;modes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;speechiness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;speechiness&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;acousticness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;acousticness&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;instrumentalness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;instrumentalness&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;liveness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;liveness&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;valences&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;valence&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;tempos&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;tempo&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;types&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;ids&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;track_hrefs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;track_href&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;analysis_urls&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;analysis_url&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;durations_ms&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;duration_ms&#39;</span><span class="p">])</span>
+            <span class="n">store</span><span class="p">[</span><span class="s1">&#39;time_signatures&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;time_signature&#39;</span><span class="p">])</span>
+
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">limit</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.extract_tracks" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">extract_tracks</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="n">playlist_uri</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method deals with extracting tracks from a given playlist
+Note, this method forms the cornerstone of extraction, providing track access from a playlist.</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>sp</code></td>
+          <td>
+                <code>Spotipy Authorization</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The authorized spotipy credentials object</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>playlist_uri</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The URI of the Spotify playlist</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>store</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The object in which to store extracted information</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">extract_tracks</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="n">playlist_uri</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method deals with extracting tracks from a given playlist</span>
+<span class="sd">    Note, this method forms the cornerstone of extraction, providing track access from a playlist.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sp (Spotipy Authorization): The authorized spotipy credentials object</span>
+<span class="sd">        playlist_uri (str): The URI of the Spotify playlist</span>
+<span class="sd">        store (dict): The object in which to store extracted information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">playlist</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">playlist_tracks</span><span class="p">(</span><span class="n">playlist_uri</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>  <span class="c1"># Retrieve the initial batch of songs</span>
+    <span class="n">total_songs</span> <span class="o">=</span> <span class="n">playlist</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span>  <span class="c1"># Extract the total number of songs</span>
+
+    <span class="k">while</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="n">total_songs</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">playlist</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">playlist_tracks</span><span class="p">(</span><span class="n">playlist_uri</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>  <span class="c1"># Retrieve batch of songs in playlist</span>
+        <span class="n">store</span> <span class="o">=</span> <span class="n">retrieve_batch_info</span><span class="p">(</span><span class="n">playlist</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span>  <span class="c1"># Retrieve batch information</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">limit</span>  <span class="c1"># Update offset</span>
+
+    <span class="n">extract_artist_info</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">sp</span><span class="p">)</span>  <span class="c1"># Extract the artist features for each track</span>
+    <span class="n">extract_audio_features</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">sp</span><span class="p">)</span>  <span class="c1"># Extract the audio features for each track</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.find_top_playlists" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">find_top_playlists</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="n">country</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method finds the top-20 playlists in a given country</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>sp</code></td>
+          <td>
+                <code>Spotipy Authorization</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The authorized spotipy credentials object</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>country</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The ISO 3166-1 alpha-2 country code of where the playlist should be extracted from.</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>uris</code></td>          <td>
+                <code>list</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of uris linking to each of the found playlists</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+<td><code>names</code></td>          <td>
+                <code>list</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>A related list of playlist names corresponding to the uris</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">find_top_playlists</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="n">country</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method finds the top-20 playlists in a given country</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sp (Spotipy Authorization): The authorized spotipy credentials object</span>
+<span class="sd">        country (str): The ISO 3166-1 alpha-2 country code of where the playlist should be extracted from.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        uris (list): A list of uris linking to each of the found playlists</span>
+<span class="sd">        names (list): A related list of playlist names corresponding to the uris</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">uris</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">playlists</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">featured_playlists</span><span class="p">(</span><span class="n">country</span><span class="o">=</span><span class="n">country</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">playlist_items</span> <span class="o">=</span> <span class="n">playlists</span><span class="p">[</span><span class="s1">&#39;playlists&#39;</span><span class="p">][</span><span class="s1">&#39;items&#39;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">playlist_items</span><span class="p">:</span>  <span class="c1"># Extract the uri and name from each playlist</span>
+        <span class="n">uris</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">uris</span><span class="p">,</span> <span class="n">names</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.merge_stores" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">merge_stores</span><span class="p">(</span><span class="n">tracks_store</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method deals with merging one store into another
+Args:
+    store (dict): The track storage object to be merged.
+    tracks_store (dict): The larger object in which to merge store into</p>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">merge_stores</span><span class="p">(</span><span class="n">tracks_store</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method deals with merging one store into another</span>
+<span class="sd">    Args:</span>
+<span class="sd">        store (dict): The track storage object to be merged.</span>
+<span class="sd">        tracks_store (dict): The larger object in which to merge store into</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">store</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">tracks_store</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.process_items" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">process_items</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method extracts the information from the Spotipy <code>tracks()</code> API call.
+Information includes:
+- Track uri
+- Track name
+- Track album
+- Track popularity</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>store</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The object in which to store extracted information</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>items</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of track information generated from the Spotipy tracks API call</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>dict</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>An updated store of information</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_items</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method extracts the information from the Spotipy `tracks()` API call.</span>
+<span class="sd">    Information includes:</span>
+<span class="sd">    - Track uri</span>
+<span class="sd">    - Track name</span>
+<span class="sd">    - Track album</span>
+<span class="sd">    - Track popularity</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        store (dict): The object in which to store extracted information</span>
+<span class="sd">        items (list): The list of track information generated from the Spotipy tracks API call</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (dict): An updated store of information</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+        <span class="n">track_uri</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;track&#39;</span><span class="p">][</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Extract track uri only from the provided link</span>
+        <span class="n">store</span><span class="p">[</span><span class="s1">&#39;uris&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track_uri</span><span class="p">)</span>  <span class="c1"># Retrieve track uri</span>
+        <span class="n">store</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;track&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>  <span class="c1"># Retrieve track name</span>
+
+        <span class="n">store</span><span class="p">[</span><span class="s1">&#39;artist_uris&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;track&#39;</span><span class="p">][</span><span class="s1">&#39;artists&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># Find artist uri</span>
+
+        <span class="n">store</span><span class="p">[</span><span class="s1">&#39;artist_names&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;track&#39;</span><span class="p">][</span><span class="s1">&#39;artists&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>  <span class="c1"># Access artist name</span>
+
+        <span class="n">store</span><span class="p">[</span><span class="s1">&#39;albums&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;track&#39;</span><span class="p">][</span><span class="s1">&#39;album&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>  <span class="c1"># Access album names</span>
+        <span class="n">store</span><span class="p">[</span><span class="s1">&#39;track_pop&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;track&#39;</span><span class="p">][</span><span class="s1">&#39;popularity&#39;</span><span class="p">])</span>  <span class="c1"># Access track popularity</span>
+    <span class="k">return</span> <span class="n">store</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.retrieve_batch_info" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">retrieve_batch_info</span><span class="p">(</span><span class="n">playlist</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method retrieves the essential information from the batch API call to enable simplified extraction</p>
+
+
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>dict</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>A partially updated store of track information. This required further data extraction.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">retrieve_batch_info</span><span class="p">(</span><span class="n">playlist</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method retrieves the essential information from the batch API call to enable simplified extraction</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (dict): A partially updated store of track information. This required further data extraction.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">playlist</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">]</span>  <span class="c1"># Extract items (A list containing information on the tracks)</span>
+    <span class="n">store</span> <span class="o">=</span> <span class="n">process_items</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span>  <span class="c1"># Extract info and store it.</span>
+    <span class="k">return</span> <span class="n">store</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.save_data" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">save_data</span><span class="p">(</span><span class="n">tracks_store</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tracks.csv&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method deals with saving collected track data</p>
+<p>Note, this method removes all duplicate tracks, such that all tracks within the dataset are unique, always keeping
+most up-to-date representation of each track.</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>tracks_store</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The dictionary containing all information extracted about the tracks</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the file to save the information to. Default is the tracks.csv dataset file.</p>
+            </div>
+          </td>
+          <td>
+                <code>&#39;tracks.csv&#39;</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span>
+<span class="normal">96</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">save_data</span><span class="p">(</span><span class="n">tracks_store</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tracks.csv&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method deals with saving collected track data</span>
+
+<span class="sd">    Note, this method removes all duplicate tracks, such that all tracks within the dataset are unique, always keeping</span>
+<span class="sd">    most up-to-date representation of each track.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tracks_store (dict): The dictionary containing all information extracted about the tracks</span>
+<span class="sd">        name (str): The name of the file to save the information to. Default is the tracks.csv dataset file.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">root_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">df_new</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">tracks_store</span><span class="p">)</span>  <span class="c1"># Create a dataframe from the collected data</span>
+    <span class="n">df_old</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Create dataframe from old values</span>
+
+    <span class="k">if</span> <span class="n">df_old</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;tracks.csv&quot;</span><span class="p">:</span>  <span class="c1"># Previously saved songs, requiring further processing to have unique values only</span>
+        <span class="n">df_combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_new</span><span class="p">,</span> <span class="n">df_old</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">df_unique</span> <span class="o">=</span> <span class="n">df_combined</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s1">&#39;uris&#39;</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">)</span>  <span class="c1"># Drop duplicates (keeping most up to date)</span>
+        <span class="n">df_unique</span> <span class="o">=</span> <span class="n">df_unique</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df_unique</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df_new</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.target_playlist_extraction" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">target_playlist_extraction</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method extracts all track information from a given target playlist
+Args:
+    sp (Spotipy Authorization): The authorized spotipy credentials object
+    url (str): The url of the playlist from which to extract information
+    name (str): The name of the playlist</p>
+
+
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>dict</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>A dictionary containing all features and information pertaining to the target playlist.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">target_playlist_extraction</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method extracts all track information from a given target playlist</span>
+<span class="sd">    Args:</span>
+<span class="sd">        sp (Spotipy Authorization): The authorized spotipy credentials object</span>
+<span class="sd">        url (str): The url of the playlist from which to extract information</span>
+<span class="sd">        name (str): The name of the playlist</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (dict): A dictionary containing all features and information pertaining to the target playlist.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">uri</span> <span class="o">=</span> <span class="n">url2uri</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>  <span class="c1"># Extract the uri</span>
+    <span class="n">store</span> <span class="o">=</span> <span class="n">construct_storage</span><span class="p">()</span>  <span class="c1"># Create the info storage</span>
+    <span class="n">extract_tracks</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span>  <span class="c1"># Extract track information</span>
+    <span class="n">add_playlist_tracking</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span>  <span class="c1"># Add playlist information (name)</span>
+    <span class="n">save_data</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s1">&#39;target.csv&#39;</span><span class="p">)</span>  <span class="c1"># Save the data (Update tracks.csv) dataset</span>
+    <span class="k">return</span> <span class="n">store</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.top_playlist_extraction" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">top_playlist_extraction</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method extracts the tracks in the 20 top-performing playlists from a selection of countries
+The countries include: Australia, UK, USA, Canada, Jamaica, South Africa</p>
+<p>This method does not return any information, but stores it in the tracks.csv dataset file.</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>sp</code></td>
+          <td>
+                <code>Spotipy Authorization</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The authorized spotipy credentials object</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">top_playlist_extraction</span><span class="p">(</span><span class="n">sp</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method extracts the tracks in the 20 top-performing playlists from a selection of countries</span>
+<span class="sd">     The countries include: Australia, UK, USA, Canada, Jamaica, South Africa</span>
+
+<span class="sd">     This method does not return any information, but stores it in the tracks.csv dataset file.</span>
+
+<span class="sd">     Args:</span>
+<span class="sd">         sp (Spotipy Authorization): The authorized spotipy credentials object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">countries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AU&#39;</span><span class="p">,</span> <span class="s1">&#39;GB&#39;</span><span class="p">,</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span> <span class="s1">&#39;CA&#39;</span><span class="p">,</span> <span class="s1">&#39;JM&#39;</span><span class="p">,</span> <span class="s1">&#39;ZA&#39;</span><span class="p">]</span>
+
+    <span class="n">tracks_store</span> <span class="o">=</span> <span class="n">construct_storage</span><span class="p">()</span>  <span class="c1"># Construct track info storage</span>
+
+    <span class="k">for</span> <span class="n">country</span> <span class="ow">in</span> <span class="n">countries</span><span class="p">:</span>  <span class="c1"># Iterate through countries</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Country: </span><span class="si">{</span><span class="n">country</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">top_playlists</span><span class="p">,</span> <span class="n">names</span> <span class="o">=</span> <span class="n">find_top_playlists</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="n">country</span><span class="p">)</span>  <span class="c1"># Find top 20 playlists in each country</span>
+
+        <span class="k">for</span> <span class="n">playlist</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">top_playlists</span><span class="p">[:],</span> <span class="n">names</span><span class="p">[:]):</span>  <span class="c1"># Iterate through playlists</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Playlist name: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">store</span> <span class="o">=</span> <span class="n">construct_storage</span><span class="p">()</span>
+                <span class="n">extract_tracks</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="n">playlist</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span>
+                <span class="n">add_playlist_tracking</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span>
+                <span class="n">merge_stores</span><span class="p">(</span><span class="n">tracks_store</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span>  <span class="c1"># Merge the playlist information, by merging the data stored.</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Respect APi limits through a forced sleep</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error accessing playlist </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> tracks&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----------------------------------------------------------------------------&#39;</span><span class="p">)</span>
+
+    <span class="n">save_data</span><span class="p">(</span><span class="n">tracks_store</span><span class="p">)</span>  <span class="c1"># Save the data</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.update_tracking" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">update_tracking</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method updates the <code>dataset_growth.csv</code> file when new tracks are added to the dataset to record dataset growth</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>df</code></td>
+          <td>
+                <code>DataFrame</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The dataframe containing all stored tracks, including new additions</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_tracking</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method updates the `dataset_growth.csv` file when new tracks are added to the dataset to record dataset growth</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (DataFrame): The dataframe containing all stored tracks, including new additions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">root_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>  <span class="c1"># Read in the growth dataset</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;dataset_growth.csv&#39;</span><span class="p">)</span>
+    <span class="n">tracking_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">current_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>  <span class="c1"># Extract new features to update the growth dataset with</span>
+    <span class="n">new_length</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">new_entry</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">current_time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%m-%Y&quot;</span><span class="p">)],</span>
+                                        <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">current_time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">)],</span>
+                                        <span class="s1">&#39;track_count&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">new_length</span><span class="p">]})</span>
+
+    <span class="n">tracking_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">tracking_df</span><span class="p">,</span> <span class="n">new_entry</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Update growth dataset</span>
+    <span class="n">tracking_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tracking_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.data_processing.url2uri" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">url2uri</span><span class="p">(</span><span class="n">url</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method extracts the uri from a given Spotify url</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>url</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The Spotify playlist url</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+      <p>Returns:
+    (str): The uri of the Spotify playlist</p>
+
+          <details class="quote">
+            <summary>Source code in <code>src/data_processing.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">url2uri</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method extracts the uri from a given Spotify url</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        url (str): The Spotify playlist url</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (str): The uri of the Spotify playlist</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+    
+  </body>
+</html>
