@@ -8,7 +8,19 @@ import re
 
 
 class Monitor:
+    """Monitor class serves as a dataset monitor
+
+    Attributes:
+        history_name (str): Name of the history dataset file name
+        tracks_name (str): Name of the tracks dataset file name
+        root_path (Path): Path to the root of the project
+        hist_path (Path): Path to the history dataset
+        track_path (Path): Path to the tracks dataset
+        history (DataFrame): History dataset as a dataframe
+        tracks (DataFrame): Track dataset as a dataframe
+    """
     def __init__(self):
+        """Method constructs the dataset monitor for data analysis within this page"""
         self.history_name = 'dataset_growth.csv'
         self.tracks_name = 'tracks.csv'
         self.root_path = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
@@ -18,19 +30,41 @@ class Monitor:
         self.history = pd.read_csv(self.hist_path)
         self.tracks = pd.read_csv(self.track_path)
 
-        self.history['date'] = pd.to_datetime(self.history['date'], format="%d-%m-%Y")
-        self.history['time'] = pd.to_datetime(self.history['time'], format='%H:%M:%S')
+        self.history['date'] = pd.to_datetime(self.history['date'], format="%d-%m-%Y")  # Format the date
+        self.history['time'] = pd.to_datetime(self.history['time'], format='%H:%M:%S')  # Format the time
 
     def determine_date_range(self):
+        """Method determines the date range in the dataset history file.
+
+        Returns:
+            start (datetime): The earliest date available in the dataset history file.
+            end (datetime): The latest date available in the dataset history file.
+        """
         return self.history['date'].min(), self.history['date'].max()
 
     def access_acoustic_sample_features(self):
+        """Method samples the tracks dataset and selects acoustic features for visualization in the pairplot.
+
+        Note, sampling is used here as the size of the tracks dataset would take a long time to render in a pairplot.
+
+        Returns:
+            (DataFrame): Sampled tracks dataframe containing select acoustic features.
+        """
         track_sample = self.tracks.sample(frac=0.1, random_state=1)
         acoustics_df = track_sample[['danceability', 'energy', 'loudness', 'speechiness',
                                     'acousticness', 'instrumentalness']]
         return acoustics_df
 
     def access_specific_features(self, selection: list, sample=True):
+        """Method allows for access to specific acoustic features in the tracks dataset
+
+        Args:
+            selection (list): A list of acoustic features
+            sample (bool): If True, the features must be sampled. If False, the feature is not sampled.
+
+        Returns:
+            (DataFrame): A dataframe containing the specified feature.
+        """
         if sample:
             track_sample = self.tracks.sample(frac=0.1, random_state=2)
         else:
@@ -38,14 +72,49 @@ class Monitor:
         return track_sample[selection]
 
     def access_artist_names(self):
+        """Method determines the unique artist names in the tracks dataset.
+
+        Returns:
+            (list): A list of unique artists available in the tracks dataset.
+        """
         names = self.tracks['artist_names'].unique().tolist()
         return names
 
     def access_feature_definitions(self):
+        """Method allows for the `data/feature_def` file to be read-in providing feature definitions
+
+        Returns:
+            (str): Feature definitions
+        """
         def_file = os.path.join(self.root_path, 'data', 'feature_def.txt')
         with open(def_file, 'r') as file:
             contents = file.read()
             return contents
+
+
+def datasets_download_section():
+    """Method prepares the `tracks.csv` and the `dataset_growth.csv` files for download."""
+    # Tracks download
+    with open(st.session_state.monitor.track_path, 'rb') as file:
+        data = file.read()
+
+    st.download_button(
+        label='Click to download tracks dataset',
+        data=data,
+        file_name='tracks.csv',
+        key='download_dataset'
+    )
+
+    # Growth download
+    with open(st.session_state.monitor.hist_path, 'rb') as history_file:
+        data_hist = history_file.read()
+
+    st.download_button(
+        label='Click to download tracks growth dataset',
+        data=data_hist,
+        file_name='dataset_growth.csv',
+        key='download_dataset_growth'
+    )
 
 
 def create_feature_selection(maximum=12):
@@ -121,57 +190,51 @@ def generate_pair_plot():
     return g.fig
 
 
-def datasets_download():
-    """Method prepares the `tracks.csv` and the `dataset_growth.csv` files for download."""
-    # Tracks download
-    with open(st.session_state.monitor.track_path, 'rb') as file:
-        data = file.read()
+def generate_distribution(selection: list):
+    """Method generates feature distibutions to allow feature comparisons.
 
-    st.download_button(
-        label='Click to download tracks dataset',
-        data=data,
-        file_name='tracks.csv',
-        key='download_dataset'
-    )
+    Note, all features are normalized within the same range [-1, 1] for comparative visualization purposes.
 
-    # Growth download
-    with open(st.session_state.monitor.hist_path, 'rb') as history_file:
-        data_hist = history_file.read()
+    Args:
+        selection (list): A list of features, such that their distributions will be visually compared.
+    """
+    df = st.session_state.monitor.access_specific_features(selection)
 
-    st.download_button(
-        label='Click to download tracks growth dataset',
-        data=data_hist,
-        file_name='dataset_growth.csv',
-        key='download_dataset_growth'
-    )
-
-
-def generate_distribution(selection: list, artist_filter=None):
-    if artist_filter is None:
-        df = st.session_state.monitor.access_specific_features(selection)
-    else:
-        selection.append('artist_names')
-        df = st.session_state.monitor.access_specific_features(selection, sample=False)
-        df = df[df['artist_names'].isin(artist_filter)]  # Filter df to keep arist only tracks
-        selection.remove('artist_names')
-
-    scaler = MinMaxScaler(feature_range=(-1, 1))  # Normalize the data
+    scaler = MinMaxScaler(feature_range=(-1, 1))  # Normalize the data between [-1, 1] for visual purposes
     columns = selection
     df[columns] = scaler.fit_transform(df[columns])
 
     sns.set()
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    if artist_filter is None:
-        for feature in selection:
-            h = sns.kdeplot(data=df, x=feature, label=feature, fill=True)
-        ax.set_title('Acoustic Feature Distribution')
-        ax.set_xlabel('Value')
-        ax.set_ylabel('Density')
-        ax.legend()
-    else:
-        h = sns.swarmplot(data=df, x=selection[0], y='artist_names', hue='artist_names', palette="Set2", legend=False)
+    for feature in selection:
+        h = sns.kdeplot(data=df, x=feature, label=feature, fill=True)
+    ax.set_title('Acoustic Feature Distribution')
+    ax.set_xlabel('Value')
+    ax.set_ylabel('Density')
+    ax.legend()
 
+    return fig
+
+
+def generate_artist_comparison(selection: list, artist_filter: list):
+    """
+    Args:
+        selection (list): A list of features, such that their distributions will be visually compared.
+        artist_filter (list): A filter of artist names, if the distributions
+    """
+    selection.append('artist_names')
+    df = st.session_state.monitor.access_specific_features(selection, sample=False)
+    df = df[df['artist_names'].isin(artist_filter)]  # Filter df to keep arist only tracks
+    selection.remove('artist_names')
+
+    scaler = MinMaxScaler(feature_range=(-1, 1))  # Normalize the data between [-1, 1] for visual purposes
+    columns = selection
+    df[columns] = scaler.fit_transform(df[columns])
+
+    sns.set()
+    fig, ax = plt.subplots(figsize=(10, 6))
+    h = sns.swarmplot(data=df, x=selection[0], y='artist_names', hue='artist_names', palette="Set2", legend=False)
     return fig
 
 
@@ -237,14 +300,14 @@ if len(search) != 0:
     artists = st.multiselect(label='Please select from the available artist in the dataset', options=options)
     if len(artists) != 0:
         feature = create_feature_selection(maximum=1)
-        fig_4 = generate_distribution(selection=feature, artist_filter=artists)
+        fig_4 = generate_artist_comparison(selection=feature, artist_filter=artists)
         st.pyplot(fig_4)
 
 
 st.header('Datasets Download')
 st.markdown('Please click the below button to download the Spotify tracks dataset as a csv file.')
 if st.button('Prepare Dataset for Download'):
-    datasets_download()
+    datasets_download_section()
 
 
 
