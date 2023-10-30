@@ -18,4 +18,5 @@ in a way where you can easily see and deploy your results_
 This section provides access to the extensive documentation underlying the MIAS project.
 
 - [Data Processing](data_processing.md)
-- [Similarity Interface]()
+- [Similarity Interface](similarity_interface.md)
+- [Pipeline interface](pipeline_interface.md)
