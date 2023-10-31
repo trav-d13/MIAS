@@ -10,7 +10,8 @@ The hosted and running application can be found at: [https://mias-recommender-sy
 
 - The most upt-to-date dataset is openly available from: [https://mias-recommender-sys.streamlit.app/dataset](https://mias-recommender-sys.streamlit.app/dataset)
 
-- Alternatively, the dataset is hosted on Kaggle and available at: [https://www.kaggle.com/datasets/travisdaws/spotify-tracks-acoustic-features?rvi=1](https://www.kaggle.com/datasets/travisdaws/spotify-tracks-acoustic-features?rvi=1)
+- Alternatively, the dataset is hosted on Kaggle and available at: [https://www.kaggle.com/datasets/travisdaws/spotify-tracks-acoustic-features/data](https://www.kaggle.com/datasets/travisdaws/spotify-tracks-acoustic-features/data)
+
 
 **Disclaimer:** The dataset was collected to create a simple song recommendation system, based on track acoustic features, artist, popularity, etc. It does not include any propriety Spotify audio content or Spotify audio tracks. 
 The dataset contains publicly available information from Spotify and is intended only for learning. 
