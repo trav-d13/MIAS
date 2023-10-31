@@ -213,7 +213,7 @@ if 'playlist_links' not in st.session_state:  # Initialize playlist history stat
 # Mias welcome
 st.title("MIAS")
 st.markdown(
-    "MIAS is the **M**usically **I**lliterate **A**id **S**ystem designed to help artists expand their "
+    "MIAS is a Spotify song recommendation system designed to help artists expand their "
     "performance playlist by finding similar songs that match features essential to them")
 
 
