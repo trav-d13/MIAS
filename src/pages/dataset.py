@@ -330,6 +330,12 @@ if len(search) != 0:
 # Dataset download
 st.header('Datasets Download')
 st.markdown('Please click the below button to download the Spotify tracks dataset as a csv file.')
+st.markdown("**Disclaimer:** The dataset was collected to create a simple song recommendation system, based on track "
+            "acoustic features, artist, popularity, etc. It does not include any propriety Spotify audio content or "
+            "Spotify audio tracks. The dataset contains publicly available information from Spotify and is intended "
+            "only for learning. The application deployed is only for testing creating a usable recommender system, "
+            "it is not intended as a product for commercial or intensive use. Please respect it, and the Spotify "
+            "Developer API. The dataset is protected by an CC BY-NC-SA 4.0 license.")
 if st.button('Prepare Dataset for Download'):
     datasets_download_section()
 
