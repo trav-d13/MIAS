@@ -6,6 +6,26 @@ The hosted and running application can be found at: [https://mias-recommender-sy
 ## Developer
 Please make use of the Developer documentation available here: [https://trav-d13.github.io/MIAS/](https://trav-d13.github.io/MIAS/).
 
+The most upt-to-date dataset is openly available from: [https://mias-recommender-sys.streamlit.app/dataset](https://mias-recommender-sys.streamlit.app/dataset)
+
+Alternatively, the dataset is hosted on Kaggle and available at:
+
+**Disclaimer:** The dataset was collected to create a simple song recommendation system, based on track acoustic features, artist, popularity, etc. It does not include any propriety Spotify audio content or Spotify audio tracks. 
+The dataset contains publicly available information from Spotify and is intended only for learning. 
+The application deployed is only for testing creating a usable recommender system, it is not intended as a product for commercial or intensive use. Please respect it, and the Spotify Developer API.
+
+**Copyright:**
+Shield: [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
+
+This work is licensed under a
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
+
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
+
+[cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
+[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
+[cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
+
 ### Project Structure
 ```
 MIAS/
