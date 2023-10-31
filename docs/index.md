@@ -1,14 +1,13 @@
 # Welcome to MIAS Documentation
 
 **MIAS** is a Spotify song recommendation system designed to help artists expand their 
-performance playlist by finding similar songs that match features essential to them"
+performance playlist by finding similar songs that match their essential acoustic features.
 
 The following links provide access to the hosted MIAS service and source code: 
 
 - **MIAS Application:** [https://mias-recommender-sys.streamlit.app/](https://mias-recommender-sys.streamlit.app/)
-- **Source Code:** [https://github.com/trav-d13/MIAS](https://github.com/trav-d13/MIAS)
-- **Kaggle Dataset:** [https://www.kaggle.com/datasets/travisdaws/spotify-tracks-acoustic-features](https://www.kaggle.com/datasets/travisdaws/spotify-tracks-acoustic-features)
 - **GitHub Repository:** [https://github.com/trav-d13/MIAS](https://github.com/trav-d13/MIAS)
+- **Kaggle Dataset:** [https://www.kaggle.com/datasets/travisdaws/spotify-tracks-acoustic-features](https://www.kaggle.com/datasets/travisdaws/spotify-tracks-acoustic-features)
 
 ![img.png](result_pic.png)
 
