@@ -2,7 +2,7 @@
 A Spotify song recommendation system that allows weighting of acoustic features that are important to you, giving
 you in-tune song recommendations. 
 
-This project was built to help artists expands their performance playlists, by identifying similar songs.
+The initial idea behind this project is to built a recommendation system to help artists expands their performance playlists, by identifying similar songs.
 
 ![Recommended tracks picture](docs/result_pic.png)
 
