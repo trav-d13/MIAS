@@ -40,8 +40,9 @@ MIAS/
 │
 ├── notebooks/
 │
+├── docs/
+│
 └── src/
-
 ```
 
 ## Running the Application
