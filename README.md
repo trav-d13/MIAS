@@ -1,14 +1,16 @@
 # Musically Illiterate Aid System (MIAS)
 Content covering basic content and collaborative filtering recommender systems culminating in a Spotify song recommendation system.
 
+![Recommended tracks picture](docs/result_pic.png)
+
 The hosted and running application can be found at: [https://mias-recommender-sys.streamlit.app/](https://mias-recommender-sys.streamlit.app/)
 
 ## Developer
-Please make use of the Developer documentation available here: [https://trav-d13.github.io/MIAS/](https://trav-d13.github.io/MIAS/).
+- Please make use of the Developer documentation available here: [https://trav-d13.github.io/MIAS/](https://trav-d13.github.io/MIAS/).
 
-The most upt-to-date dataset is openly available from: [https://mias-recommender-sys.streamlit.app/dataset](https://mias-recommender-sys.streamlit.app/dataset)
+- The most upt-to-date dataset is openly available from: [https://mias-recommender-sys.streamlit.app/dataset](https://mias-recommender-sys.streamlit.app/dataset)
 
-Alternatively, the dataset is hosted on Kaggle and available at:
+- Alternatively, the dataset is hosted on Kaggle and available at: [https://www.kaggle.com/datasets/travisdaws/spotify-tracks-acoustic-features?rvi=1](https://www.kaggle.com/datasets/travisdaws/spotify-tracks-acoustic-features?rvi=1)
 
 **Disclaimer:** The dataset was collected to create a simple song recommendation system, based on track acoustic features, artist, popularity, etc. It does not include any propriety Spotify audio content or Spotify audio tracks. 
 The dataset contains publicly available information from Spotify and is intended only for learning. 
