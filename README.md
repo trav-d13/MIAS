@@ -104,7 +104,8 @@ def set_credentials():
 The currently running application runs a Chron jobs to scrape and collect tracks from the top-performing playlists
 every two-weeks, updating the tracks dataset. 
 Additionally, every playlist queried for recommendations is added to the dataset. 
-The dataset is freely available, pleas see the _bottom_ of the **dataset** page on the application available at: ...
+The dataset is freely available, please see the _bottom_ of the **dataset** page on the application available at: [https://mias-recommender-sys.streamlit.app/dataset](https://mias-recommender-sys.streamlit.app/dataset)
+or alternatively the Kaggle dataset at: [https://www.kaggle.com/datasets/travisdaws/spotify-tracks-acoustic-features](https://www.kaggle.com/datasets/travisdaws/spotify-tracks-acoustic-features)
 
 ### Manual Collection
 If you would like to test the data processing and manually collect target playlist or general spotify data, copy and
