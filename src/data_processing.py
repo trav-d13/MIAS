@@ -2,6 +2,9 @@ import os
 import time
 from datetime import datetime
 import pandas as pd
+import spotipy
+import streamlit as st
+from spotipy import SpotifyClientCredentials
 
 """This file forms the basis of Spotify data processing.
 
@@ -320,3 +323,10 @@ def update_tracking(df):
     tracking_df.reset_index(drop=True)
     tracking_df.to_csv(file_path, mode='w')
 
+
+if __name__ == "__main__":
+    client_credentials_manager = SpotifyClientCredentials(client_id=st.secrets['CLIENT_ID'],
+                                                          client_secret=st.secrets[
+                                                              'CLIENT_SECRET'])  # Set up Spotify Credentials
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+    top_playlist_extraction(sp)
